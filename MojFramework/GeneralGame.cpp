@@ -10,3 +10,18 @@ void GeneralGame::GameOverBanner(Graphics& gfx) const
 		}
 	}
 }
+
+bool GeneralGame::GameOverStatus()
+{
+	return gameOver;
+}
+
+void GeneralGame::StartGame()
+{
+	gameOver = false;
+}
+
+void GeneralGame::GameOver()
+{
+	gameOver = true;
+}

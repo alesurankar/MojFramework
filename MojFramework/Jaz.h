@@ -6,10 +6,15 @@
 class Jaz
 {
 public:
+	Jaz(int x_in, int y_in);
 	void BorderCheck();
 	void Draw(Graphics& gfx) const;
 	void Update(const Keyboard& kbd);
-public:
+	int GetX();
+	int GetY();
+	int GetWidth();
+	int GetHeight();
+private:
 	int x = 100;
 	int y = 100;
 	int speed;

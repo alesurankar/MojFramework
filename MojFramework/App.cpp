@@ -1,11 +1,15 @@
 #include "MainWindow.h"
 #include "App.h"
-#include <random>
 
 App::App(MainWindow& wnd)
 	:
 	wnd(wnd),
-	gfx(wnd)
+	gfx(wnd), 
+	rng(rd()),
+	xRand(20, gfx.ScreenWidth - 30),
+	yRand(20, gfx.ScreenHeight - 30),
+	vRand(-1, 1),
+	jaz(xRand(rng),yRand(rng))
 {
 }
 
@@ -19,26 +23,16 @@ void App::Go()
 
 void App::UpdateModel()
 {
-	if (gg.gameOver)
+	if (gg.GameOverStatus())
 	{
 		if (wnd.kbd.KeyIsPressed(VK_RETURN))
 		{
-			std::random_device rd;
-			std::mt19937 rng(rd());
-			std::uniform_int_distribution<int> xRandom(0, gfx.ScreenWidth - 20);
-			std::uniform_int_distribution<int> yRandom(0, gfx.ScreenHeight - 20);
-			std::uniform_int_distribution<int> vRandom(-1,1);
-			gg.gameOver = false;
-			jaz.x = xRandom(rng);
-			jaz.y = yRandom(rng);
+			gg.StartGame();
 			for (int i = 0; i < n; i++)
 			{
 
-				obj[i].collected = false;
-				obj[i].x = xRandom(rng);
-				obj[i].y = yRandom(rng);
-				obj[i].vx = vRandom(rng);
-				obj[i].vy = vRandom(rng);
+				obj[i].Reset();
+				obj[i].Init(xRand(rng),yRand(rng),vRand(rng),vRand(rng));
 			}
 		}
 	}
@@ -54,25 +48,25 @@ void App::UpdateModel()
 			obj[i].Update(); 
 			if (obj[i].Colliding(jaz))
 			{
-				obj[i].collected = true;
+				obj[i].Collected();
 			}
 		}
 
 		bool allCollected = true;
 		for (int i = 0; i < n; i++)
 		{
-			allCollected = allCollected && obj[i].collected;
+			allCollected = allCollected && obj[i].CheckCollected();
 		}
 		if (allCollected)
 		{
-			gg.gameOver = true;
+			gg.GameOver();
 		}
 	}
 }
 
 void App::ComposeFrame()
 {
-	if (gg.gameOver)
+	if (gg.GameOverStatus())
 	{
 		gg.GameOverBanner(gfx);
 	}
@@ -81,7 +75,7 @@ void App::ComposeFrame()
 		jaz.Draw(gfx);
 		for (int i = 0; i < n; i++)
 		{
-			if (!obj[i].collected)
+			if (!obj[i].CheckCollected())
 			{
 				obj[i].Draw(gfx);
 			}

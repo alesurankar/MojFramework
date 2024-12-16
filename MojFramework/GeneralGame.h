@@ -6,6 +6,9 @@ class GeneralGame
 {
 public:
 	void GameOverBanner(Graphics& gfx) const;
-public:
+	bool GameOverStatus();
+	void StartGame();
+	void GameOver();
+private:
 	bool gameOver = true;
 };

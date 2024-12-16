@@ -1,5 +1,11 @@
 #include "Jaz.h"
 
+Jaz::Jaz(int x_in, int y_in)
+{
+	x = x_in;
+	y = y_in;
+}
+
 void Jaz::BorderCheck()
 {
 	if (x <= 0)
@@ -57,4 +63,24 @@ void Jaz::Update(const Keyboard& kbd)
 	{
 		x += speed;
 	}
+}
+
+int Jaz::GetX()
+{
+	return x;
+}
+
+int Jaz::GetY()
+{
+	return y;
+}
+
+int Jaz::GetWidth()
+{
+	return width;
+}
+
+int Jaz::GetHeight()
+{
+	return height;
 }
