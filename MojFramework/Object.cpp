@@ -1,6 +1,6 @@
 #include "Object.h"
 
-void Object::Init(int x_in, int y_in, int vx_in, int vy_in)
+void Object::InitRed(float x_in, float y_in, float vx_in, float vy_in)
 {
 	x = x_in;
 	y = y_in;
@@ -8,9 +8,15 @@ void Object::Init(int x_in, int y_in, int vx_in, int vy_in)
 	vy = vy_in;
 }
 
-int Object::BorderCheckX(int x_in, int width_in)
+void Object::InitBlue(float x_in, float y_in)
 {
-	if ((x_in <= 0) || (x_in >= Graphics::ScreenWidth - width_in))
+	x = x_in;
+	y = y_in;
+}
+
+float Object::BorderCheckX(float x_in, float width_in)
+{
+	if ((x_in <= GeneralGame::difficulty) || (x_in >= float(Graphics::ScreenWidth - GeneralGame::difficulty) - width_in))
 	{
 		return -1;
 	}
@@ -20,9 +26,9 @@ int Object::BorderCheckX(int x_in, int width_in)
 	}
 }
 
-int Object::BorderCheckY(int y_in, int height_in)
+float Object::BorderCheckY(float y_in, float height_in)
 {
-	if ((y_in <= 0) || (y_in >= Graphics::ScreenHeight - height_in))
+	if ((y_in <= GeneralGame::yOffset - GeneralGame::difficulty) || (y_in >= float(Graphics::ScreenHeight - GeneralGame::difficulty) - height_in))
 	{
 		return -1;
 	}
@@ -32,15 +38,14 @@ int Object::BorderCheckY(int y_in, int height_in)
 	}
 }
 
-void Object::Draw(Graphics& gfx) const
+void Object::DrawRed(Graphics& gfx) const
 {
-	for (int i = x; i < x + width; i++)
-	{
-		for (int j = y; j < y + height; j++)
-		{
-			gfx.PutPixel(i, j, Colors::Red);
-		}
-	}
+	gfx.DrawRect(int(x), int(y), int(width), int(height), Colors::Red);
+}
+
+void Object::DrawBlue(Graphics& gfx) const
+{
+	gfx.DrawRect(int(x), int(y), int(width), int(height), Colors::Blue);
 }
 
 void Object::Update()
@@ -54,29 +59,14 @@ void Object::Update()
 
 bool Object::Colliding(Jaz& jaz)
 {
-	const int right0 = jaz.GetX() + jaz.GetWidth();
-	const int bottom0 = jaz.GetY() + jaz.GetHeight();
-	const int right1 = x + width;
-	const int bottom1 = y + height;
+	const float right0 = jaz.GetX() + jaz.GetWidth();
+	const float bottom0 = jaz.GetY() + jaz.GetHeight();
+	const float right1 = x + width;
+	const float bottom1 = y + height;
 
 	return
 		right0 >= x &&
 		bottom0 >= y &&
 		right1 >= jaz.GetX() &&
 		bottom1 >= jaz.GetY();
-}
-
-void Object::Collected()
-{
-	collected = true;
-}
-
-void Object::Reset()
-{
-	collected = false;
-}
-
-bool Object::CheckCollected()
-{
-	return collected;
 }

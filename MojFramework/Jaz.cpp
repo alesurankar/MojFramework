@@ -1,6 +1,6 @@
 #include "Jaz.h"
 
-Jaz::Jaz(int x_in, int y_in)
+Jaz::Jaz(float x_in, float y_in)
 {
 	x = x_in;
 	y = y_in;
@@ -8,33 +8,27 @@ Jaz::Jaz(int x_in, int y_in)
 
 void Jaz::BorderCheck()
 {
-	if (x <= 0)
+	if (x <= GeneralGame::offset)
 	{
-		x = 0;
+		x = GeneralGame::offset;
 	}
-	if (y <= 0)
+	if (y <= GeneralGame::yOffset)
 	{
-		y = 0;
+		y = GeneralGame::yOffset;
 	}
-	if (x >= Graphics::ScreenWidth - width)
+	if (x >= float(Graphics::ScreenWidth - GeneralGame::offset) - width)
 	{
-		x = Graphics::ScreenWidth - width;
+		x = float(Graphics::ScreenWidth - GeneralGame::offset) - width;
 	}
-	if (y >= Graphics::ScreenHeight - height)
+	if (y >= float(Graphics::ScreenHeight - GeneralGame::offset) - height)
 	{
-		y = Graphics::ScreenHeight - height;
+		y = float(Graphics::ScreenHeight - GeneralGame::offset) - height;
 	}
 }
 
 void Jaz::Draw(Graphics& gfx) const
 {
-	for (int i = x; i < x + width; i++)
-	{
-		for (int j = y; j < y + height; j++)
-		{
-			gfx.PutPixel(i, j, Colors::Green);
-		}
-	}
+	gfx.DrawRect(int(x), int(y), int(width), int(height), Colors::Green);
 }
 
 void Jaz::Update(const Keyboard& kbd)
@@ -65,22 +59,22 @@ void Jaz::Update(const Keyboard& kbd)
 	}
 }
 
-int Jaz::GetX()
+float Jaz::GetX()
 {
 	return x;
 }
 
-int Jaz::GetY()
+float Jaz::GetY()
 {
 	return y;
 }
 
-int Jaz::GetWidth()
+float Jaz::GetWidth()
 {
 	return width;
 }
 
-int Jaz::GetHeight()
+float Jaz::GetHeight()
 {
 	return height;
 }

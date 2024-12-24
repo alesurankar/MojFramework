@@ -2,22 +2,23 @@
 
 #include "Graphics.h"
 #include "Keyboard.h"
+#include "GeneralGame.h"
 
 class Jaz
 {
 public:
-	Jaz(int x_in, int y_in);
+	Jaz(float x_in, float y_in);
 	void BorderCheck();
 	void Draw(Graphics& gfx) const;
 	void Update(const Keyboard& kbd);
-	int GetX();
-	int GetY();
-	int GetWidth();
-	int GetHeight();
+	float GetX();
+	float GetY();
+	float GetWidth();
+	float GetHeight();
 private:
-	int x = 100;
-	int y = 100;
-	int speed;
-	static constexpr int width = 12;
-	static constexpr int height = 12;
+	float x;
+	float y;
+	float speed;
+	static constexpr float width = 12.0f;
+	static constexpr float height = 12.0f;
 };

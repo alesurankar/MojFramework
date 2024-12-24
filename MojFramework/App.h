@@ -28,12 +28,13 @@ private:
 	/*  Moji Parametri              */
 	std::random_device rd;
 	std::mt19937 rng;
-	std::uniform_int_distribution<int> xRand;
-	std::uniform_int_distribution<int> yRand;
-	std::uniform_int_distribution<int> vRand;
+	std::uniform_real_distribution<float> xRand;
+	std::uniform_real_distribution<float> yRand;
+	std::uniform_real_distribution<float> vRand;
 	Jaz jaz;
-	static constexpr int n = 1000;
-	Object obj[n];
+	static constexpr int n = 10;
+	Object objRed[n];
+	Object objBlue;
 	GeneralGame gg;
 	/********************************/
 };

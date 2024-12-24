@@ -6,9 +6,9 @@ App::App(MainWindow& wnd)
 	wnd(wnd),
 	gfx(wnd), 
 	rng(rd()),
-	xRand(20, gfx.ScreenWidth - 30),
-	yRand(20, gfx.ScreenHeight - 30),
-	vRand(-1, 1),
+	xRand(20.0f, 770.0f),
+	yRand(20.0f, 570.0f),
+	vRand(-GeneralGame::difficulty, GeneralGame::difficulty),
 	jaz(xRand(rng),yRand(rng))
 {
 }
@@ -30,10 +30,9 @@ void App::UpdateModel()
 			gg.StartGame();
 			for (int i = 0; i < n; i++)
 			{
-
-				obj[i].Reset();
-				obj[i].Init(xRand(rng),yRand(rng),vRand(rng),vRand(rng));
+				objRed[i].InitRed(xRand(rng),yRand(rng),vRand(rng),vRand(rng));
 			}
+			objBlue.InitBlue(xRand(rng), yRand(rng));
 		}
 	}
 	else
@@ -41,25 +40,24 @@ void App::UpdateModel()
 		jaz.Update(wnd.kbd);
 
 		jaz.BorderCheck();
-
 		
 		for (int i = 0; i < n; i++)
 		{
-			obj[i].Update(); 
-			if (obj[i].Colliding(jaz))
+			objRed[i].Update(); 
+			if (objRed[i].Colliding(jaz))
 			{
-				obj[i].Collected();
+				gg.GameOver();
 			}
 		}
-
-		bool allCollected = true;
-		for (int i = 0; i < n; i++)
+		if (objBlue.Colliding(jaz))
 		{
-			allCollected = allCollected && obj[i].CheckCollected();
-		}
-		if (allCollected)
-		{
-			gg.GameOver();
+			gg.AddScore();
+			objBlue.InitBlue(xRand(rng), yRand(rng));
+			if (gg.ScoreStatus() >= GeneralGame::maxScore)
+			{
+				gg.GameOver();
+				gg.GameWon();
+			}
 		}
 	}
 }
@@ -68,17 +66,24 @@ void App::ComposeFrame()
 {
 	if (gg.GameOverStatus())
 	{
-		gg.GameOverBanner(gfx);
+		if (gg.GameWonStatus())
+		{
+			gg.GameWonBanner(gfx);
+		}
+		else
+		{
+			gg.GameLostBanner(gfx);
+		}
 	}
 	else
 	{
 		jaz.Draw(gfx);
 		for (int i = 0; i < n; i++)
 		{
-			if (!obj[i].CheckCollected())
-			{
-				obj[i].Draw(gfx);
-			}
+			objRed[i].DrawRed(gfx);
 		}
+		objBlue.DrawBlue(gfx);
+		gg.DrawScore(gfx);
+		gg.DrawGameBorder(gfx);
 	}
 }
