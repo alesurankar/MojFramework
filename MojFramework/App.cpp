@@ -33,7 +33,6 @@ void App::UpdateModel()
 				objRed[i].InitRed(Vec2(xRand(rng),yRand(rng)),Vec2(vRand(rng),vRand(rng)));
 			}
 			objBlue.InitBlue(Vec2(xRand(rng), yRand(rng)));
-			bul.Init(Vec2(30.0f, 30.0f), Vec2(1.0f, 1.0f));
 		}
 	}
 	else
@@ -42,9 +41,17 @@ void App::UpdateModel()
 		jaz.Update(wnd.kbd);
 		jaz.Update(wnd.mouse);
 		jaz.BorderCheck();
-		
+		if (wnd.mouse.LeftIsPressed())
+		{
+			bul.Init(Vec2(30.0f, 30.0f), Vec2(1.0f, 1.0f));
+			bul.Flying();
+		}
+
 		//Bullet
-		bul.Update();
+		if (bul.FlyingStatus())
+		{
+			bul.Update();
+		}
 
 		//Object
 		for (int i = 0; i < n; i++)
@@ -87,7 +94,10 @@ void App::ComposeFrame()
 		jaz.Draw(gfx);
 
 		//Bullet
-		bul.Draw(gfx);
+		if (bul.FlyingStatus())
+		{
+			bul.Draw(gfx);
+		}
 
 		//Object
 		for (int i = 0; i < n; i++)
