@@ -32,6 +32,7 @@ void Jaz::Draw(Graphics& gfx) const
 
 void Jaz::Update(const Keyboard& kbd)
 {
+	Vec2 dir(0.0f, 0.0f);
 	if (kbd.KeyIsPressed(VK_SPACE))
 	{
 		speed = 6;
@@ -42,20 +43,21 @@ void Jaz::Update(const Keyboard& kbd)
 	}
 	if (kbd.KeyIsPressed('W'))
 	{
-		pos.y -= speed;;
+		dir.y -= 1.0f;
 	}
 	if (kbd.KeyIsPressed('S'))
 	{
-		pos.y += speed;
+		dir.y += 1.0f;
 	}
 	if (kbd.KeyIsPressed('A'))
 	{
-		pos.x -= speed;
+		dir.x -= 1.0f;
 	}
 	if (kbd.KeyIsPressed('D'))
 	{
-		pos.x += speed;
+		dir.x += 1.0f;
 	}
+	pos += dir.GetNormalized() * speed;
 }
 
 Vec2 Jaz::GetPos()
