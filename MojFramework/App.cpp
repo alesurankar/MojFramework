@@ -30,6 +30,7 @@ void App::UpdateModel()
 			gg.StartGame();
 			for (int i = 0; i < n; i++)
 			{
+				objRed[i].Respawn();
 				objRed[i].InitRed(Vec2(xRand(rng),yRand(rng)),Vec2(vRand(rng),vRand(rng)));
 			}
 			objBlue.InitBlue(Vec2(xRand(rng), yRand(rng)));
@@ -45,7 +46,7 @@ void App::UpdateModel()
 		{
 			if (!bul.FlyingStatus())
 			{
-				bul.Init(Vec2(30.0f, 30.0f), Vec2(1.0f, 1.0f));
+				bul.Init(jaz.GetCenter(), jaz.GetDirection(wnd.mouse));
 				bul.Flying();
 			}
 		}

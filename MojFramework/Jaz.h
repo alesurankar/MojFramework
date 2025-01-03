@@ -18,6 +18,8 @@ public:
 	float GetWidth();
 	float GetHeight();
 	bool FiringStatus();
+	Vec2 GetCenter();
+	Vec2 GetDirection(const Mouse& mouse);
 private:
 	bool firing;
 	Vec2 pos;

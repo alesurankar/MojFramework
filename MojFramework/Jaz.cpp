@@ -65,9 +65,8 @@ void Jaz::Update(const Mouse& mouse)
 	if (mouse.LeftIsPressed())
 	{
 		firing = true;
-		//Vec2 center = pos + Vec2(width / 2.0f, height / 2.0f);
-		//Vec2 dir = Vec2(float(mouse.GetPosX()), float(mouse.GetPosY())) - center;
-		//pos += dir.GetNormalized() * speed;
+		//
+		//pos += 
 	}
 	else
 	{
@@ -93,4 +92,15 @@ float Jaz::GetHeight()
 bool Jaz::FiringStatus()
 {
 	return firing;
+}
+
+Vec2 Jaz::GetCenter()
+{
+	return pos + Vec2(width / 2.0f, height / 2.0f);
+}
+
+Vec2 Jaz::GetDirection(const Mouse& mouse)
+{
+	Vec2 dir = Vec2(float(mouse.GetPosX()), float(mouse.GetPosY())) - GetCenter();
+	return dir.GetNormalized();
 }
