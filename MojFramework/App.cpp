@@ -41,10 +41,13 @@ void App::UpdateModel()
 		jaz.Update(wnd.kbd);
 		jaz.Update(wnd.mouse);
 		jaz.BorderCheck();
-		if (wnd.mouse.LeftIsPressed())
+		if (jaz.FiringStatus())
 		{
-			bul.Init(Vec2(30.0f, 30.0f), Vec2(1.0f, 1.0f));
-			bul.Flying();
+			if (!bul.FlyingStatus())
+			{
+				bul.Init(Vec2(30.0f, 30.0f), Vec2(1.0f, 1.0f));
+				bul.Flying();
+			}
 		}
 
 		//Bullet

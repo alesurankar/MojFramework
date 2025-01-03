@@ -17,7 +17,9 @@ public:
 	Vec2 GetPos();
 	float GetWidth();
 	float GetHeight();
+	bool FiringStatus();
 private:
+	bool firing;
 	Vec2 pos;
 	float speed;
 	static constexpr float width = 12.0f;
