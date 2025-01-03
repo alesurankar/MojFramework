@@ -1,34 +1,33 @@
 #include "Jaz.h"
 
-Jaz::Jaz(float x_in, float y_in)
+Jaz::Jaz(const Vec2& pos_in)
 {
-	x = x_in;
-	y = y_in;
+	pos = pos_in;
 }
 
 void Jaz::BorderCheck()
 {
-	if (x <= float(GeneralGame::offset))
+	if (pos.x <= float(GeneralGame::offset))
 	{
-		x = float(GeneralGame::offset);
+		pos.x = float(GeneralGame::offset);
 	}
-	if (y <= float(GeneralGame::yOffset))
+	if (pos.y <= float(GeneralGame::yOffset))
 	{
-		y = float(GeneralGame::yOffset);
+		pos.y = float(GeneralGame::yOffset);
 	}
-	if (x >= float(Graphics::ScreenWidth - GeneralGame::offset) - width)
+	if (pos.x >= float(Graphics::ScreenWidth - GeneralGame::offset) - width)
 	{
-		x = float(Graphics::ScreenWidth - GeneralGame::offset) - width;
+		pos.x = float(Graphics::ScreenWidth - GeneralGame::offset) - width;
 	}
-	if (y >= float(Graphics::ScreenHeight - GeneralGame::offset) - height)
+	if (pos.y >= float(Graphics::ScreenHeight - GeneralGame::offset) - height)
 	{
-		y = float(Graphics::ScreenHeight - GeneralGame::offset) - height;
+		pos.y = float(Graphics::ScreenHeight - GeneralGame::offset) - height;
 	}
 }
 
 void Jaz::Draw(Graphics& gfx) const
 {
-	gfx.DrawRect(int(x), int(y), int(width), int(height), Colors::Green);
+	gfx.DrawRect(int(pos.x), int(pos.y), int(width), int(height), Colors::Green);
 }
 
 void Jaz::Update(const Keyboard& kbd)
@@ -43,30 +42,25 @@ void Jaz::Update(const Keyboard& kbd)
 	}
 	if (kbd.KeyIsPressed('W'))
 	{
-		y -= speed;;
+		pos.y -= speed;;
 	}
 	if (kbd.KeyIsPressed('S'))
 	{
-		y += speed;
+		pos.y += speed;
 	}
 	if (kbd.KeyIsPressed('A'))
 	{
-		x -= speed;
+		pos.x -= speed;
 	}
 	if (kbd.KeyIsPressed('D'))
 	{
-		x += speed;
+		pos.x += speed;
 	}
 }
 
-float Jaz::GetX()
+Vec2 Jaz::GetPos()
 {
-	return x;
-}
-
-float Jaz::GetY()
-{
-	return y;
+	return pos;
 }
 
 float Jaz::GetWidth()

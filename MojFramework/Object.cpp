@@ -59,14 +59,14 @@ void Object::Update()
 
 bool Object::Colliding(Jaz& jaz)
 {
-	const float right0 = jaz.GetX() + jaz.GetWidth();
-	const float bottom0 = jaz.GetY() + jaz.GetHeight();
+	const float right0 = jaz.GetPos().x + jaz.GetWidth();
+	const float bottom0 = jaz.GetPos().y + jaz.GetHeight();
 	const float right1 = x + width;
 	const float bottom1 = y + height;
 
 	return
 		right0 >= x &&
 		bottom0 >= y &&
-		right1 >= jaz.GetX() &&
-		bottom1 >= jaz.GetY();
+		right1 >= jaz.GetPos().x &&
+		bottom1 >= jaz.GetPos().y;
 }

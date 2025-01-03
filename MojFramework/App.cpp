@@ -9,7 +9,7 @@ App::App(MainWindow& wnd)
 	xRand(20.0f, 770.0f),
 	yRand(20.0f, 570.0f),
 	vRand(-GeneralGame::difficulty, GeneralGame::difficulty),
-	jaz(xRand(rng),yRand(rng))
+	jaz(Vec2(xRand(rng),yRand(rng)))
 {
 }
 
