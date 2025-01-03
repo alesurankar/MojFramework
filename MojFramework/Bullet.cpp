@@ -56,3 +56,13 @@ void Bullet::Flying()
 {
 	flying = true;
 }
+
+Vec2 Bullet::GetPos()
+{
+	return pos;
+}
+
+float Bullet::GetDim()
+{
+	return dim;
+}

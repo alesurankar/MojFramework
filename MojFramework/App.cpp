@@ -61,6 +61,11 @@ void App::UpdateModel()
 			{
 				gg.GameOver();
 			}
+			if (objRed[i].Colliding(bul))
+			{
+				objRed[i].Destroyed();
+				bul.Smashed();
+			}
 		}
 		if (objBlue.Colliding(jaz))
 		{
@@ -102,7 +107,10 @@ void App::ComposeFrame()
 		//Object
 		for (int i = 0; i < n; i++)
 		{
-			objRed[i].DrawRed(gfx);
+			if (!objRed[i].DestroyedStatus())
+			{
+				objRed[i].DrawRed(gfx);
+			}
 		}
 		objBlue.DrawBlue(gfx);
 		

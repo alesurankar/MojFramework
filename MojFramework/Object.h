@@ -4,6 +4,7 @@
 #include "Jaz.h"
 #include "GeneralGame.h"
 #include "Vec2.h"
+#include "Bullet.h"
 
 class Object
 {
@@ -15,7 +16,12 @@ public:
 	void DrawBlue(Graphics& gfx) const;
 	void Update();
 	bool Colliding(Jaz& jaz);
+	bool Colliding(Bullet& bul);
+	void Destroyed();
+	void Respawn();
+	bool DestroyedStatus();
 private:
+	bool destroyed = false;
 	Vec2 pos;
 	Vec2 vel;
 	static constexpr float width = 12.0f;

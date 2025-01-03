@@ -67,3 +67,33 @@ bool Object::Colliding(Jaz& jaz)
 		right1 >= jaz.GetPos().x &&
 		bottom1 >= jaz.GetPos().y;
 }
+
+bool Object::Colliding(Bullet& bul)
+{
+	const float right0 = bul.GetPos().x + bul.GetDim();
+	const float bottom0 = bul.GetPos().y + bul.GetDim();
+	const float right1 = pos.x + width;
+	const float bottom1 = pos.y + height;
+
+	return
+		right0 >= pos.x &&
+		bottom0 >= pos.y &&
+		right1 >= bul.GetPos().x &&
+		bottom1 >= bul.GetPos().y;
+}
+
+void Object::Destroyed()
+{
+	InitRed(Vec2(-100.0f, -100.0f), Vec2(0.0f, 0.0f));
+	destroyed = true;
+}
+
+void Object::Respawn()
+{
+	destroyed = false;
+}
+
+bool Object::DestroyedStatus()
+{
+	return destroyed;
+}

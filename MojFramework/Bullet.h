@@ -14,6 +14,8 @@ public:
 	void Smashed();
 	bool FlyingStatus();
 	void Flying();
+	Vec2 GetPos();
+	float GetDim();
 private:
 	bool flying = false;
 	Vec2 pos;
