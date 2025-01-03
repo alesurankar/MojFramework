@@ -38,6 +38,7 @@ void App::UpdateModel()
 	else
 	{
 		jaz.Update(wnd.kbd);
+		jaz.Update(wnd.mouse);
 		jaz.BorderCheck();
 		
 		for (int i = 0; i < n; i++)

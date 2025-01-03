@@ -2,6 +2,7 @@
 
 #include "Graphics.h"
 #include "Keyboard.h"
+#include "Mouse.h"
 #include "GeneralGame.h"
 #include "Vec2.h"
 
@@ -12,6 +13,7 @@ public:
 	void BorderCheck();
 	void Draw(Graphics& gfx) const;
 	void Update(const Keyboard& kbd);
+	void Update(const Mouse& mouse);
 	Vec2 GetPos();
 	float GetWidth();
 	float GetHeight();

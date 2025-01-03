@@ -60,6 +60,16 @@ void Jaz::Update(const Keyboard& kbd)
 	pos += dir.GetNormalized() * speed;
 }
 
+void Jaz::Update(const Mouse& mouse)
+{
+	if (mouse.LeftIsPressed())
+	{
+		Vec2 center = pos + Vec2(width / 2.0f, height / 2.0f);
+		Vec2 dir = Vec2(float(mouse.GetPosX()), float(mouse.GetPosY())) - center;
+		pos += dir.GetNormalized() * speed;
+	}
+}
+
 Vec2 Jaz::GetPos()
 {
 	return pos;
