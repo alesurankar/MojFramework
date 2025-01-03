@@ -30,9 +30,9 @@ void App::UpdateModel()
 			gg.StartGame();
 			for (int i = 0; i < n; i++)
 			{
-				objRed[i].InitRed(xRand(rng),yRand(rng),vRand(rng),vRand(rng));
+				objRed[i].InitRed(Vec2(xRand(rng),yRand(rng)),Vec2(vRand(rng),vRand(rng)));
 			}
-			objBlue.InitBlue(xRand(rng), yRand(rng));
+			objBlue.InitBlue(Vec2(xRand(rng), yRand(rng)));
 		}
 	}
 	else
@@ -51,7 +51,7 @@ void App::UpdateModel()
 		if (objBlue.Colliding(jaz))
 		{
 			gg.AddScore();
-			objBlue.InitBlue(xRand(rng), yRand(rng));
+			objBlue.InitBlue(Vec2(xRand(rng), yRand(rng)));
 			if (gg.ScoreStatus() >= GeneralGame::maxScore)
 			{
 				gg.GameOver();
