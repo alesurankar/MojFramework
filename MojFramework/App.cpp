@@ -38,7 +38,6 @@ void App::UpdateModel()
 	else
 	{
 		jaz.Update(wnd.kbd);
-
 		jaz.BorderCheck();
 		
 		for (int i = 0; i < n; i++)

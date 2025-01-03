@@ -14,29 +14,30 @@ void Object::InitBlue(float x_in, float y_in)
 	y = y_in;
 }
 
-float Object::BorderCheckX(float x_in, float width_in)
+void Object::BorderCheck()
 {
-	if ((x_in <= GeneralGame::difficulty) || (x_in >= float(Graphics::ScreenWidth - GeneralGame::difficulty) - width_in))
+	if (x <= float(GeneralGame::offset))
 	{
-		return -1;
+		x = float(GeneralGame::offset);
+		vx = -vx;
 	}
-	else
+	if (y <= float(GeneralGame::yOffset))
 	{
-		return 1;
+		y = float(GeneralGame::yOffset);
+		vy = -vy;
+	}
+	if (x >= float(Graphics::ScreenWidth - GeneralGame::offset) - width)
+	{
+		x = float(Graphics::ScreenWidth - GeneralGame::offset) - width;
+		vx = -vx;
+	}
+	if (y >= float(Graphics::ScreenHeight - GeneralGame::offset) - height)
+	{
+		y = float(Graphics::ScreenHeight - GeneralGame::offset) - height;
+		vy = -vy;
 	}
 }
 
-float Object::BorderCheckY(float y_in, float height_in)
-{
-	if ((y_in <= GeneralGame::yOffset - GeneralGame::difficulty) || (y_in >= float(Graphics::ScreenHeight - GeneralGame::difficulty) - height_in))
-	{
-		return -1;
-	}
-	else
-	{
-		return 1;
-	}
-}
 
 void Object::DrawRed(Graphics& gfx) const
 {
@@ -50,11 +51,10 @@ void Object::DrawBlue(Graphics& gfx) const
 
 void Object::Update()
 {
-	vx *= BorderCheckX(x, width);
-	vy *= BorderCheckY(y, height);
-
 	x += vx;
 	y += vy;
+
+	BorderCheck();
 }
 
 bool Object::Colliding(Jaz& jaz)

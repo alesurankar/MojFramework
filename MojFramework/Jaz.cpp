@@ -8,13 +8,13 @@ Jaz::Jaz(float x_in, float y_in)
 
 void Jaz::BorderCheck()
 {
-	if (x <= GeneralGame::offset)
+	if (x <= float(GeneralGame::offset))
 	{
-		x = GeneralGame::offset;
+		x = float(GeneralGame::offset);
 	}
-	if (y <= GeneralGame::yOffset)
+	if (y <= float(GeneralGame::yOffset))
 	{
-		y = GeneralGame::yOffset;
+		y = float(GeneralGame::yOffset);
 	}
 	if (x >= float(Graphics::ScreenWidth - GeneralGame::offset) - width)
 	{
