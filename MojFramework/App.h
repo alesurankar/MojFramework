@@ -6,6 +6,7 @@
 #include "Object.h"
 #include "Jaz.h"
 #include "GeneralGame.h"
+#include "Bullet.h"
 #include <random>
 
 class App
@@ -36,5 +37,6 @@ private:
 	Object objRed[n];
 	Object objBlue;
 	GeneralGame gg;
+	Bullet bul;
 	/********************************/
 };

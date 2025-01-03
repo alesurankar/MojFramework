@@ -33,14 +33,20 @@ void App::UpdateModel()
 				objRed[i].InitRed(Vec2(xRand(rng),yRand(rng)),Vec2(vRand(rng),vRand(rng)));
 			}
 			objBlue.InitBlue(Vec2(xRand(rng), yRand(rng)));
+			bul.Init(Vec2(30.0f, 30.0f), Vec2(1.0f, 1.0f));
 		}
 	}
 	else
 	{
+		//Jaz
 		jaz.Update(wnd.kbd);
 		jaz.Update(wnd.mouse);
 		jaz.BorderCheck();
 		
+		//Bullet
+		bul.Update();
+
+		//Object
 		for (int i = 0; i < n; i++)
 		{
 			objRed[i].Update(); 
@@ -77,12 +83,20 @@ void App::ComposeFrame()
 	}
 	else
 	{
+		//Jaz
 		jaz.Draw(gfx);
+
+		//Bullet
+		bul.Draw(gfx);
+
+		//Object
 		for (int i = 0; i < n; i++)
 		{
 			objRed[i].DrawRed(gfx);
 		}
 		objBlue.DrawBlue(gfx);
+		
+		//GeneralGame
 		gg.DrawScore(gfx);
 		gg.DrawGameBorder(gfx);
 	}
