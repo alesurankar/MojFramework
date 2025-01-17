@@ -39,9 +39,7 @@ void App::UpdateModel()
 	else
 	{
 		//Jaz
-		jaz.Update(wnd.kbd);
-		jaz.Update(wnd.mouse);
-		jaz.BorderCheck();
+		jaz.Update(wnd.mouse, wnd.kbd);
 		if (jaz.FiringStatus())
 		{
 			if (!bul.FlyingStatus())

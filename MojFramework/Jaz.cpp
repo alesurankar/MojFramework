@@ -30,9 +30,16 @@ void Jaz::Draw(Graphics& gfx) const
 	gfx.DrawRect(int(pos.x), int(pos.y), int(width), int(height), Colors::Green);
 }
 
-void Jaz::Update(const Keyboard& kbd)
+void Jaz::Update(const Mouse& mouse, const Keyboard& kbd)
 {
-	Vec2 dir(0.0f, 0.0f);
+	if (mouse.LeftIsPressed())
+	{
+		firing = true;
+	}
+	else
+	{
+		firing = false;
+	}
 	if (kbd.KeyIsPressed(VK_SPACE))
 	{
 		speed = 6;
@@ -41,6 +48,8 @@ void Jaz::Update(const Keyboard& kbd)
 	{
 		speed = 2;
 	}
+
+	Vec2 dir(0.0f, 0.0f);
 	if (kbd.KeyIsPressed('W'))
 	{
 		dir.y -= 1.0f;
@@ -58,20 +67,8 @@ void Jaz::Update(const Keyboard& kbd)
 		dir.x += 1.0f;
 	}
 	pos += dir.GetNormalized() * speed;
-}
 
-void Jaz::Update(const Mouse& mouse)
-{
-	if (mouse.LeftIsPressed())
-	{
-		firing = true;
-		//
-		//pos += 
-	}
-	else
-	{
-		firing = false;
-	}
+	BorderCheck();
 }
 
 Vec2 Jaz::GetPos()

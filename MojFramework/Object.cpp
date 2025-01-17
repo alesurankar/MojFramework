@@ -13,25 +13,28 @@ void Object::InitBlue(const Vec2& pos_in)
 
 void Object::BorderCheck()
 {
-	if (pos.x <= float(GeneralGame::offset))
+	if (!destroyed)
 	{
-		pos.x = float(GeneralGame::offset);
-		vel.x = -vel.x;
-	}
-	if (pos.y <= float(GeneralGame::yOffset))
-	{
-		pos.y = float(GeneralGame::yOffset);
-		vel.y = -vel.y;
-	}
-	if (pos.x >= float(Graphics::ScreenWidth - GeneralGame::offset) - width)
-	{
-		pos.x = float(Graphics::ScreenWidth - GeneralGame::offset) - width;
-		vel.x = -vel.x;
-	}
-	if (pos.y >= float(Graphics::ScreenHeight - GeneralGame::offset) - height)
-	{
-		pos.y = float(Graphics::ScreenHeight - GeneralGame::offset) - height;
-		vel.y = -vel.y;
+		if (pos.x <= float(GeneralGame::offset))
+		{
+			pos.x = float(GeneralGame::offset);
+			vel.x = -vel.x;
+		}
+		if (pos.y <= float(GeneralGame::yOffset))
+		{
+			pos.y = float(GeneralGame::yOffset);
+			vel.y = -vel.y;
+		}
+		if (pos.x >= float(Graphics::ScreenWidth - GeneralGame::offset) - width)
+		{
+			pos.x = float(Graphics::ScreenWidth - GeneralGame::offset) - width;
+			vel.x = -vel.x;
+		}
+		if (pos.y >= float(Graphics::ScreenHeight - GeneralGame::offset) - height)
+		{
+			pos.y = float(Graphics::ScreenHeight - GeneralGame::offset) - height;
+			vel.y = -vel.y;
+		}
 	}
 }
 
@@ -48,8 +51,7 @@ void Object::DrawBlue(Graphics& gfx) const
 
 void Object::Update()
 {
-	pos.x += vel.x;
-	pos.y += vel.y;
+	pos += vel;
 
 	BorderCheck();
 }
