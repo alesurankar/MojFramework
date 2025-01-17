@@ -32,5 +32,5 @@ private:
 	float speed;
 	static constexpr float width = 12.0f;
 	static constexpr float height = 12.0f;
-	static constexpr int maxLives = 100;
+	static constexpr int maxLives = GeneralGame::myLives;
 };

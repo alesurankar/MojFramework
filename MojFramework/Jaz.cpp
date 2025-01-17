@@ -44,11 +44,11 @@ void Jaz::Update(const Mouse& mouse, const Keyboard& kbd)
 	}
 	if (kbd.KeyIsPressed(VK_SPACE))
 	{
-		speed = 6;
+		speed = GeneralGame::mySpeed * 3;
 	}
 	else
 	{
-		speed = 2;
+		speed = GeneralGame::mySpeed;
 	}
 
 	Vec2 dir(0.0f, 0.0f);

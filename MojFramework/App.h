@@ -33,7 +33,7 @@ private:
 	std::uniform_real_distribution<float> yRand;
 	std::uniform_real_distribution<float> vRand;
 	Jaz jaz;
-	static constexpr int n = 10;
+	static constexpr int n = GeneralGame::enemyNum;
 	Object objRed[n];
 	Object objBlue;
 	GeneralGame gg;

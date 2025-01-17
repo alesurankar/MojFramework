@@ -29,5 +29,5 @@ private:
 	Vec2 vel;
 	static constexpr float width = 12.0f;
 	static constexpr float height = 12.0f;
-	static constexpr int maxLives = 2;
+	static constexpr int maxLives = GeneralGame::enemyLives;
 };

@@ -20,6 +20,6 @@ private:
 	bool flying = false;
 	Vec2 pos;
 	Vec2 vel;
-	static constexpr float dim = 3.0f;
-	static constexpr float speed = 10.0f;
+	static constexpr float dim = GeneralGame::bulDim;
+	static constexpr float speed = GeneralGame::bulSpeed;
 };
