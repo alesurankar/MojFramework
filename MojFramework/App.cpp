@@ -49,6 +49,7 @@ void App::UpdateModel()
 
 			//GeneralGame
 			gg.StartGame();
+			startGame.Play();
 		}
 	}
 	else
@@ -61,6 +62,7 @@ void App::UpdateModel()
 			{
 				bul.Init(jaz.GetCenter(), jaz.GetDirection(wnd.mouse));
 				bul.Flying();
+				fireSound.Play();
 			}
 		}
 		if (jaz.DestroyedStatus())
@@ -81,11 +83,13 @@ void App::UpdateModel()
 			if (objRed[i].Colliding(jaz))
 			{
 				jaz.Damaged();
+				jazDamaged.Play();
 			}
 			if (objRed[i].Colliding(bul))
 			{
 				objRed[i].Damaged();
 				bul.Smashed();
+				objDamaged.Play();
 			}
 		}
 		if (objBlue.Colliding(jaz))
@@ -97,6 +101,7 @@ void App::UpdateModel()
 				gg.GameOver();
 				gg.GameWon();
 			}
+			objCollected.Play();
 		}
 	}
 }

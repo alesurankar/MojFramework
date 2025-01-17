@@ -45,7 +45,7 @@ void Bullet::BorderCheck()
 
 void Bullet::Smashed()
 {
-	Init(Vec2(-100.0f, -100.0f), Vec2(0.0f, 0.0f));
+	Init(Vec2(-200.0f, -200.0f), Vec2(0.0f, 0.0f));
 	flying = false;
 }
 
