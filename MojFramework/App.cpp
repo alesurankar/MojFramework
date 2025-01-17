@@ -49,6 +49,7 @@ void App::UpdateModel()
 
 			//GeneralGame
 			gg.StartGame();
+			frameCount = 0;
 			startGame.Play();
 		}
 	}
@@ -143,5 +144,11 @@ void App::ComposeFrame()
 		//GeneralGame
 		gg.DrawScore(gfx);
 		gg.DrawGameBorder(gfx);
+		frameCount++;
+		if (frameCount > 206)
+		{
+			gameMusic.Play();
+			frameCount = 0;
+		}
 	}
 }
