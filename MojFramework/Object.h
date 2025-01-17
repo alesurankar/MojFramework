@@ -20,10 +20,14 @@ public:
 	void Destroyed();
 	void Respawn();
 	bool DestroyedStatus();
+	void Damaged();
 private:
+	float inOff = 1.0f;
+	int lives;
 	bool destroyed = false;
 	Vec2 pos;
 	Vec2 vel;
 	static constexpr float width = 12.0f;
 	static constexpr float height = 12.0f;
+	static constexpr int maxLives = 2;
 };

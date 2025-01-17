@@ -42,6 +42,8 @@ void Object::BorderCheck()
 void Object::DrawRed(Graphics& gfx) const
 {
 	gfx.DrawRect(pos, width, height, Colors::Red);
+	gfx.DrawRect(pos + Vec2(inOff, inOff), width - 2*inOff, height - 2* inOff, Colors::White);
+	gfx.DrawRect(pos, width * float(lives) / float(maxLives), height, Colors::Red);
 }
 
 void Object::DrawBlue(Graphics& gfx) const
@@ -92,10 +94,20 @@ void Object::Destroyed()
 
 void Object::Respawn()
 {
+	lives = maxLives;
 	destroyed = false;
 }
 
 bool Object::DestroyedStatus()
 {
 	return destroyed;
+}
+
+void Object::Damaged()
+{
+	lives--;
+	if (lives <= 0)
+	{
+		Destroyed();
+	}
 }

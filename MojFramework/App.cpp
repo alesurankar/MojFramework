@@ -65,7 +65,7 @@ void App::UpdateModel()
 			}
 			if (objRed[i].Colliding(bul))
 			{
-				objRed[i].Destroyed();
+				objRed[i].Damaged();
 				bul.Smashed();
 			}
 		}
