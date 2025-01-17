@@ -296,19 +296,17 @@ void Graphics::PutPixel(int x, int y, Color c)
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
-void Graphics::DrawRect(int x, int y, int width, int height, Color c)
+void Graphics::DrawRect(int x1, int y1, int x2, int y2, Color c)
 {
-	for (int i = x; i < x + width; i++)
+	if (x1 > x2)
 	{
-		for (int j = y; j < y + height; j++)
-		{
-			PutPixel(i, j, c);
-		}
+		std::swap(x1, x2);
 	}
-}
+	if (y1 > y2)
+	{
+		std::swap(y1, y2);
+	}
 
-void Graphics::DrawRectDim(int x1, int y1, int x2, int y2, Color c)
-{
 	for (int i = x1; i < x2; i++)
 	{
 		for (int j = y1; j < y2; j++)
@@ -317,6 +315,17 @@ void Graphics::DrawRectDim(int x1, int y1, int x2, int y2, Color c)
 		}
 	}
 }
+
+void Graphics::DrawRect(const Vec2& topLeft, const Vec2& bottomRight, Color c)
+{
+	DrawRect(int(topLeft.x), int(topLeft.y), int(bottomRight.x), int(bottomRight.y), c);
+}
+
+void Graphics::DrawRect(const Vec2& topLeft, float width, float height, Color c)
+{
+	DrawRect(topLeft, topLeft + Vec2(width, height), c);
+}
+
 
 
 //////////////////////////////////////////////////

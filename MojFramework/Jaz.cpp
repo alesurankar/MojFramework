@@ -27,7 +27,7 @@ void Jaz::BorderCheck()
 
 void Jaz::Draw(Graphics& gfx) const
 {
-	gfx.DrawRect(int(pos.x), int(pos.y), int(width), int(height), Colors::Green);
+	gfx.DrawRect(pos, width, height, Colors::Green);
 }
 
 void Jaz::Update(const Mouse& mouse, const Keyboard& kbd)

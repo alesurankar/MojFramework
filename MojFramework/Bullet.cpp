@@ -8,7 +8,7 @@ void Bullet::Init(const Vec2& pos_in, const Vec2& vel_in)
 
 void Bullet::Draw(Graphics& gfx) const
 {
-	gfx.DrawRect(int(pos.x), int(pos.y), int(dim), int(dim), Colors::White);
+	gfx.DrawRect(pos, dim, dim, Colors::White);
 }
 
 void Bullet::Update()

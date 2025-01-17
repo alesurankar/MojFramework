@@ -41,12 +41,12 @@ void Object::BorderCheck()
 
 void Object::DrawRed(Graphics& gfx) const
 {
-	gfx.DrawRect(int(pos.x), int(pos.y), int(width), int(height), Colors::Red);
+	gfx.DrawRect(pos, width, height, Colors::Red);
 }
 
 void Object::DrawBlue(Graphics& gfx) const
 {
-	gfx.DrawRect(int(pos.x), int(pos.y), int(width), int(height), Colors::Blue);
+	gfx.DrawRect(pos, width, height, Colors::Blue);
 }
 
 void Object::Update()
