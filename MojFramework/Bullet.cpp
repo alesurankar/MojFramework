@@ -1,19 +1,21 @@
 #include "Bullet.h"
 
-void Bullet::Init(const Vec2& pos_in, const Vec2& vel_in)
+void Bullet::Init(const Vec2& center_in, const Vec2& vel_in)
 {
-	pos = pos_in;
+	center = center_in;
+	pos = center - Vec2(dim/2, dim/2);
 	vel = vel_in;
 }
 
 void Bullet::Draw(Graphics& gfx) const
 {
-	gfx.DrawRect(pos, dim, dim, Colors::White);
+	gfx.DrawCircle(center, dim / 2, Colors::White);
 }
 
 void Bullet::Update(float dt)
 {
 	pos += vel * speed * dt;
+	center = pos + Vec2(dim / 2, dim / 2);
 
 	BorderCheck();
 }
