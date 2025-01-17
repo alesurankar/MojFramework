@@ -12,7 +12,7 @@ public:
 	Jaz(const Vec2& pos_in);
 	void BorderCheck();
 	void Draw(Graphics& gfx) const;
-	void Update(const Mouse& mouse, const Keyboard& kbd);
+	void Update(const Mouse& mouse, const Keyboard& kbd, float dt);
 	Vec2 GetPos();
 	float GetWidth();
 	float GetHeight();

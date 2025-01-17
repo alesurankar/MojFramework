@@ -32,7 +32,7 @@ void Jaz::Draw(Graphics& gfx) const
 	gfx.DrawRect(pos, width * float(lives) / float(maxLives), height, Colors::Green);
 }
 
-void Jaz::Update(const Mouse& mouse, const Keyboard& kbd)
+void Jaz::Update(const Mouse& mouse, const Keyboard& kbd, float dt)
 {
 	if (mouse.LeftIsPressed())
 	{
@@ -68,7 +68,7 @@ void Jaz::Update(const Mouse& mouse, const Keyboard& kbd)
 	{
 		dir.x += 1.0f;
 	}
-	pos += dir.GetNormalized() * speed;
+	pos += dir.GetNormalized() * speed * dt;
 
 	BorderCheck();
 }

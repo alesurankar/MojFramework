@@ -14,7 +14,7 @@ public:
 	void BorderCheck();
 	void DrawRed(Graphics& gfx) const;
 	void DrawBlue(Graphics& gfx) const;
-	void Update();
+	void Update(float dt);
 	bool Colliding(Jaz& jaz);
 	bool Colliding(Bullet& bul);
 	void Destroyed();

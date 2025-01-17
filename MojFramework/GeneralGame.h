@@ -27,10 +27,10 @@ public:
 	static constexpr int yOffset = 3 * offset + scoreY;
 public:
 	static constexpr int maxScore = 8;
-	static constexpr float difficulty = 2.0f;
+	static constexpr float difficulty = 100.0f;
 	static constexpr int enemyNum = 20;
-	static constexpr float mySpeed = 2.0f;
-	static constexpr float bulSpeed = 10.0f;
+	static constexpr float mySpeed = 100.0f;
+	static constexpr float bulSpeed = 500.0f;
 	static constexpr float bulDim = 3.0f;
 	static constexpr int myLives = 100;
 	static constexpr int enemyLives = 2;

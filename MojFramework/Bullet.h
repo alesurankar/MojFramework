@@ -9,7 +9,7 @@ class Bullet
 public:
 	void Init(const Vec2& pos_in, const Vec2& vel_in);
 	void Draw(Graphics& gfx) const;
-	void Update();
+	void Update(float dt);
 	void BorderCheck();
 	void Smashed();
 	bool FlyingStatus();

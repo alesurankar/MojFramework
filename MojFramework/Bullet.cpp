@@ -11,9 +11,9 @@ void Bullet::Draw(Graphics& gfx) const
 	gfx.DrawRect(pos, dim, dim, Colors::White);
 }
 
-void Bullet::Update()
+void Bullet::Update(float dt)
 {
-	pos += vel * speed;
+	pos += vel * speed * dt;
 
 	BorderCheck();
 }

@@ -51,9 +51,9 @@ void Object::DrawBlue(Graphics& gfx) const
 	gfx.DrawRect(pos, width, height, Colors::Blue);
 }
 
-void Object::Update()
+void Object::Update(float dt)
 {
-	pos += vel;
+	pos += vel * dt;
 
 	BorderCheck();
 }

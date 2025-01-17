@@ -48,7 +48,7 @@ void App::UpdateModel()
 	else
 	{
 		//Jaz
-		jaz.Update(wnd.mouse, wnd.kbd);
+		jaz.Update(wnd.mouse, wnd.kbd, dt);
 		if (jaz.FiringStatus())
 		{
 			if (!bul.FlyingStatus())
@@ -65,13 +65,13 @@ void App::UpdateModel()
 		//Bullet
 		if (bul.FlyingStatus())
 		{
-			bul.Update();
+			bul.Update(dt);
 		}
 
 		//Object
 		for (int i = 0; i < n; i++)
 		{
-			objRed[i].Update(); 
+			objRed[i].Update(dt); 
 			if (objRed[i].Colliding(jaz))
 			{
 				jaz.Damaged();
