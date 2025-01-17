@@ -27,13 +27,21 @@ void App::UpdateModel()
 	{
 		if (wnd.kbd.KeyIsPressed(VK_RETURN))
 		{
-			gg.StartGame();
+			//Jaz
+			jaz.Respawn();
+
+			//Bullet
+
+			//Object
 			for (int i = 0; i < n; i++)
 			{
 				objRed[i].Respawn();
 				objRed[i].InitRed(Vec2(xRand(rng),yRand(rng)),Vec2(vRand(rng),vRand(rng)));
 			}
 			objBlue.InitBlue(Vec2(xRand(rng), yRand(rng)));
+
+			//GeneralGame
+			gg.StartGame();
 		}
 	}
 	else
@@ -48,6 +56,10 @@ void App::UpdateModel()
 				bul.Flying();
 			}
 		}
+		if (jaz.DestroyedStatus())
+		{
+			gg.GameOver();
+		}
 
 		//Bullet
 		if (bul.FlyingStatus())
@@ -61,7 +73,7 @@ void App::UpdateModel()
 			objRed[i].Update(); 
 			if (objRed[i].Colliding(jaz))
 			{
-				gg.GameOver();
+				jaz.Damaged();
 			}
 			if (objRed[i].Colliding(bul))
 			{

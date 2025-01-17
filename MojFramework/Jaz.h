@@ -19,10 +19,18 @@ public:
 	bool FiringStatus();
 	Vec2 GetCenter();
 	Vec2 GetDirection(const Mouse& mouse);
+	void Destroyed();
+	void Respawn();
+	bool DestroyedStatus();
+	void Damaged();
 private:
+	float inOff = 1.0f;
+	bool destroyed = false;
+	int lives;
 	bool firing;
 	Vec2 pos;
 	float speed;
 	static constexpr float width = 12.0f;
 	static constexpr float height = 12.0f;
+	static constexpr int maxLives = 100;
 };

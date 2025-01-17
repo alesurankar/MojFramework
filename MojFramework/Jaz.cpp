@@ -28,6 +28,8 @@ void Jaz::BorderCheck()
 void Jaz::Draw(Graphics& gfx) const
 {
 	gfx.DrawRect(pos, width, height, Colors::Green);
+	gfx.DrawRect(pos + Vec2(inOff, inOff), width - 2 * inOff, height - 2 * inOff, Colors::White);
+	gfx.DrawRect(pos, width * float(lives) / float(maxLives), height, Colors::Green);
 }
 
 void Jaz::Update(const Mouse& mouse, const Keyboard& kbd)
@@ -100,4 +102,29 @@ Vec2 Jaz::GetDirection(const Mouse& mouse)
 {
 	Vec2 dir = Vec2(float(mouse.GetPosX()), float(mouse.GetPosY())) - GetCenter();
 	return dir.GetNormalized();
+}
+
+void Jaz::Destroyed()
+{
+	destroyed = true;
+}
+
+void Jaz::Respawn()
+{
+	lives = maxLives;
+	destroyed = false;
+}
+
+bool Jaz::DestroyedStatus()
+{
+	return destroyed;
+}
+
+void Jaz::Damaged()
+{
+	lives--;
+	if (lives <= 0)
+	{
+		Destroyed();
+	}
 }
