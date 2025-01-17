@@ -8,6 +8,7 @@
 #include "GeneralGame.h"
 #include "Bullet.h"
 #include <random>
+#include "FrameTimer.h"
 
 class App
 {
@@ -27,6 +28,7 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  Moji Parametri              */
+	FrameTimer ft;
 	std::random_device rd;
 	std::mt19937 rng;
 	std::uniform_real_distribution<float> xRand;

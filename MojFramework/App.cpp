@@ -23,6 +23,7 @@ void App::Go()
 
 void App::UpdateModel()
 {
+	float dt = ft.CheckPoint();
 	if (gg.GameOverStatus())
 	{
 		if (wnd.kbd.KeyIsPressed(VK_RETURN))
