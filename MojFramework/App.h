@@ -9,6 +9,7 @@
 #include "Bullet.h"
 #include <random>
 #include "FrameTimer.h"
+#include "Sound.h"
 
 class App
 {
@@ -40,5 +41,11 @@ private:
 	Object objBlue;
 	GeneralGame gg;
 	Bullet bul;
+	Sound fireSound;
+	Sound objCollected;
+	Sound objDamaged;
+	Sound jazDamaged;
+	Sound startGame;
+	Sound gameMusic;
 	/********************************/
 };

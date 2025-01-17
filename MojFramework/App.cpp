@@ -9,7 +9,13 @@ App::App(MainWindow& wnd)
 	xRand(20.0f, 770.0f),
 	yRand(20.0f, 570.0f),
 	vRand(-GeneralGame::difficulty, GeneralGame::difficulty),
-	jaz(Vec2(xRand(rng),yRand(rng)))
+	jaz(Vec2(xRand(rng),yRand(rng))),
+	fireSound(L"Sounds\\1_fireSound.wav"),
+	objCollected(L"Sounds\\2_objcollected.wav"),
+	objDamaged(L"Sounds\\3_objDamaged.wav"),
+	jazDamaged(L"Sounds\\4_jazDamaged.wav"),
+	startGame(L"Sounds\\5_startGame.wav"),
+	gameMusic(L"Sounds\\6_gameMusic.wav")
 {
 }
 
