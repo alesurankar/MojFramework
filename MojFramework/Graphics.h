@@ -5,6 +5,7 @@
 #include "MyException.h"
 #include "Colors.h"
 #include "Vec2.h"
+#include "Surface.h"
 
 class Graphics
 {
@@ -44,6 +45,7 @@ public:
 	void DrawRect(const Vec2& topLeft, float width, float height, Color c);
 	void DrawCircle(int x, int y, int rad, Color c);
 	void DrawCircle(const Vec2& center, float rad, Color c);
+	void DrawSprite(int x, int y, const Surface& s);
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;
