@@ -38,8 +38,10 @@ void App::UpdateModel()
 			jaz.Respawn();
 
 			//Bullet
+			bul.clear();
 
 			//Enemy
+			enemy.clear();
 			for (int i = 0; i < n; i++)
 			{
 				enemy.emplace_back(Vec2(xRand(rng), yRand(rng)), Vec2(vRand(rng), vRand(rng)));
@@ -47,6 +49,7 @@ void App::UpdateModel()
 
 			//Collectable
 			coll.Init(Vec2(xRand(rng), yRand(rng)));
+			coll.BorderCheck();
 
 			//GeneralGame
 			gg.StartGame();
@@ -60,10 +63,9 @@ void App::UpdateModel()
 		jaz.Update(wnd.mouse, wnd.kbd, dt);
 		if (jaz.FiringStatus())
 		{
-			if (!bul.FlyingStatus())
+			if (!jaz.ReloadingStatus())
 			{
-				bul.Init(jaz.GetCenter(), jaz.GetDirection(wnd.mouse));
-				bul.Flying();
+				bul.emplace_back(jaz.GetCenter(), jaz.GetDirection(wnd.mouse));
 				fireSound.Play();
 			}
 		}
@@ -72,10 +74,17 @@ void App::UpdateModel()
 			gg.GameOver();
 		}
 
-		//Bullet
-		if (bul.FlyingStatus())
+		//Bulletf
+		for (int j = 0; j < bul.size(); j++)
 		{
-			bul.Update(dt);
+			if (bul[j].FlyingStatus())
+			{
+				bul[j].Update(dt);
+			}
+			else
+			{
+				bul.erase(bul.begin() + j);
+			}
 		}
 
 		//Enemy
@@ -87,15 +96,18 @@ void App::UpdateModel()
 				jaz.Damaged();
 				jazDamaged.Play();
 			}
-			if (enemy[i].Colliding(bul))
+			for (int j = 0; j < bul.size(); j++)
 			{
-				enemy[i].Damaged();
-				bul.Smashed();
-				objDamaged.Play(); 
-			}
-			if (enemy[i].DestroyedStatus())
-			{
-				enemy.erase(enemy.begin() + i);
+				if (enemy[i].Colliding(bul[j]))
+				{
+					enemy[i].Damaged();
+					bul[j].Smashed();
+					objDamaged.Play();
+				}
+				if (enemy[i].DestroyedStatus())
+				{
+					enemy.erase(enemy.begin() + i);
+				}
 			}
 		}
 
@@ -133,9 +145,12 @@ void App::ComposeFrame()
 		jaz.Draw(gfx);
 
 		//Bullet
-		if (bul.FlyingStatus())
+		for (int j = 0; j < bul.size(); j++)
 		{
-			bul.Draw(gfx);
+			if (bul[j].FlyingStatus())
+			{
+				bul[j].Draw(gfx);
+			}
 		}
 
 		//Enemy

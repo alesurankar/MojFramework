@@ -3,6 +3,7 @@
 Jaz::Jaz(const Vec2& pos_in)
 {
 	pos = pos_in;
+	reloaded = true;
 }
 
 void Jaz::BorderCheck()
@@ -37,12 +38,21 @@ void Jaz::Update(const Mouse& mouse, const Keyboard& kbd, float dt)
 {
 	if (mouse.LeftIsPressed())
 	{
-		firing = true;
+		if (reloaded)
+		{
+			firing = true;
+			reloaded = false;
+		}
+		else
+		{
+			firing = false;
+		}
 	}
 	else
 	{
-		firing = false;
+		reloaded = true;
 	}
+
 	if (kbd.KeyIsPressed(VK_SPACE))
 	{
 		speed = GeneralGame::mySpeed * 3;
@@ -92,6 +102,11 @@ float Jaz::GetHeight()
 bool Jaz::FiringStatus()
 {
 	return firing;
+}
+
+bool Jaz::ReloadingStatus()
+{
+	return reloaded;
 }
 
 Vec2 Jaz::GetCenter()

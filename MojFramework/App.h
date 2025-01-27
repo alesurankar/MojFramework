@@ -42,7 +42,7 @@ private:
 	std::vector<Enemy> enemy;
 	Collectable coll;
 	GeneralGame gg;
-	Bullet bul;
+	std::vector<Bullet> bul;
 	Sound fireSound;
 	Sound objCollected;
 	Sound objDamaged;
@@ -50,5 +50,6 @@ private:
 	Sound startGame;
 	Sound gameMusic;
 	int frameCount;
+	int k;
 	/********************************/
 };
