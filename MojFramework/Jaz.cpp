@@ -28,9 +28,9 @@ void Jaz::BorderCheck()
 void Jaz::Draw(Graphics& gfx) const
 {
 	gfx.DrawSprite(int(pos.x), int(pos.y), surf);
-	//gfx.DrawRect(pos, width, height, Colors::Green);
-	//gfx.DrawRect(pos + Vec2(inOff, inOff), width - 2 * inOff, height - 2 * inOff, Colors::White);
-	//gfx.DrawRect(pos, width * float(lives) / float(maxLives), height, Colors::Green);
+	gfx.DrawRect(pos - Vec2(0.0f, 8.0f), width, 6.0f, Colors::Green);
+	gfx.DrawRect(pos + Vec2(inOff, inOff - 8.0f), width - 2 * inOff, 6.0f - 2 * inOff, Colors::White);
+	gfx.DrawRect(pos - Vec2(0.0f, 8.0f), width * float(lives) / float(maxLives), 6.0f, Colors::Green);
 }
 
 void Jaz::Update(const Mouse& mouse, const Keyboard& kbd, float dt)
