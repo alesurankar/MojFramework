@@ -16,7 +16,6 @@ public:
 	void Update(float dt);
 	bool Colliding(Jaz& jaz);
 	bool Colliding(Bullet& bul);
-	void Destroyed();
 	bool DestroyedStatus();
 	void Damaged();
 	Vec2 GetPos() const;
