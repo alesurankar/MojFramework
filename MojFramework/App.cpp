@@ -44,7 +44,7 @@ void App::UpdateModel()
 			enemy.clear();
 
 			//Collectable
-			coll.Init(Vec2(xRand(rng), yRand(rng)));
+			coll.clear();
 
 			//GeneralGame
 			gg.StartGame();
@@ -112,6 +112,7 @@ void App::UpdateModel()
 			if (enemy[i].DestroyedStatus())
 			{
 				enemy.erase(enemy.begin() + i);
+				coll.emplace_back(Vec2(xRand(rng), yRand(rng)));
 			}
 			else
 			{
@@ -120,16 +121,23 @@ void App::UpdateModel()
 		}
 
 		//Collectable
-		if (coll.Colliding(jaz))
+		for (int c = 0; c < coll.size();)
 		{
-			gg.AddScore();
-			coll.Init(Vec2(xRand(rng), yRand(rng)));
-			if (gg.ScoreStatus() >= GeneralGame::maxScore)
+			if (coll[c].Colliding(jaz))
 			{
-				gg.GameOver();
-				gg.GameWon();
+				gg.AddScore();
+				coll.erase(coll.begin() + c);
+				if (gg.ScoreStatus() >= GeneralGame::maxScore)
+				{
+					gg.GameOver();
+					gg.GameWon();
+				}
+				objCollected.Play();
 			}
-			objCollected.Play();
+			else
+			{
+				c++;
+			}
 		}
 
 		//GeneralGame
@@ -183,7 +191,10 @@ void App::ComposeFrame()
 		}
 
 		//Collectable
-		coll.Draw(gfx);
+		for (int c = 0; c < coll.size(); c++)
+		{
+			coll[c].Draw(gfx);
+		}
 
 		//GeneralGame
 		gg.DrawScore(gfx);
