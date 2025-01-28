@@ -75,11 +75,12 @@ void App::UpdateModel()
 		}
 
 		//Bullet
-		for (int j = 0; j < bul.size(); j++)
+		for (int j = 0; j < bul.size();)
 		{
 			if (bul[j].FlyingStatus())
 			{
 				bul[j].Update(dt);
+				j++;
 			}
 			else
 			{
