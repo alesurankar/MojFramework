@@ -42,10 +42,6 @@ void App::UpdateModel()
 
 			//Enemy
 			enemy.clear();
-			for (int i = 0; i < n; i++)
-			{
-				enemy.emplace_back(Vec2(xRand(rng), yRand(rng)), Vec2(vRand(rng), vRand(rng)));
-			}
 
 			//Collectable
 			lastDestroyedPos = Vec2(xRand(rng), yRand(rng));
@@ -55,6 +51,7 @@ void App::UpdateModel()
 			gg.StartGame();
 			frameCount = 0;
 			startGame.Play();
+			k = 0;
 		}
 	}
 	else
@@ -89,6 +86,12 @@ void App::UpdateModel()
 		}
 
 		//Enemy
+		if (k > 60 && enemy.size() < n)
+		{
+			enemy.emplace_back(Vec2(xRand(rng), yRand(rng)), Vec2(vRand(rng), vRand(rng)));
+			k = 0;
+		}
+		k++;
 		for (int i = 0; i < enemy.size();)
 		{
 			enemy[i].Update(dt); 
@@ -129,6 +132,8 @@ void App::UpdateModel()
 			}
 			objCollected.Play();
 		}
+
+		//GeneralGame
 	}
 }
 
