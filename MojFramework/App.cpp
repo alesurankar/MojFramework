@@ -88,7 +88,7 @@ void App::UpdateModel()
 		}
 
 		//Enemy
-		for (int i = 0; i < enemy.size(); i++)
+		for (int i = 0; i < enemy.size();)
 		{
 			enemy[i].Update(dt); 
 			if (enemy[i].Colliding(jaz))
@@ -104,10 +104,14 @@ void App::UpdateModel()
 					bul[j].Smashed();
 					objDamaged.Play();
 				}
-				if (enemy[i].DestroyedStatus())
-				{
-					enemy.erase(enemy.begin() + i);
-				}
+			}
+			if (enemy[i].DestroyedStatus())
+			{
+				enemy.erase(enemy.begin() + i);
+			}
+			else
+			{
+				i++;
 			}
 		}
 

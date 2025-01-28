@@ -51,5 +51,6 @@ private:
 	Sound gameMusic;
 	int frameCount;
 	int k;
+	Vec2 lastDestroyedPos;
 	/********************************/
 };
