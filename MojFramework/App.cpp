@@ -38,6 +38,7 @@ void App::UpdateModel()
 			jaz.Respawn();
 
 			//Bullet
+			bul.clear();
 
 			//Enemy
 			enemy.clear();
@@ -61,10 +62,9 @@ void App::UpdateModel()
 		jaz.Update(wnd.mouse, wnd.kbd, dt);
 		if (jaz.FiringStatus())
 		{
-			if (!bul.FlyingStatus())
+			if (!jaz.ReloadStatus())
 			{
-				bul.Init(jaz.GetCenter(), jaz.GetDirection(wnd.mouse));
-				bul.Flying();
+				bul.emplace_back(jaz.GetCenter(), jaz.GetDirection(wnd.mouse));
 				fireSound.Play();
 			}
 		}
@@ -74,33 +74,44 @@ void App::UpdateModel()
 		}
 
 		//Bullet
-		if (bul.FlyingStatus())
+		for (int j = 0; j < bul.size();)
 		{
-			bul.Update(dt);
+			if (bul[j].FlyingStatus())
+			{
+				bul[j].Update(dt);
+				j++;
+			}
+			else
+			{
+				bul.erase(bul.begin() + j);
+			}
 		}
 
 		//Enemy
 		for (int i = 0; i < enemy.size();)
 		{
-			enemy[i].Update(dt); 
+			enemy[i].Update(dt);
 			if (enemy[i].Colliding(jaz))
 			{
 				jaz.Damaged();
 				jazDamaged.Play();
 			}
-			if (enemy[i].Colliding(bul))
+			for (int j = 0; j < bul.size(); j++)
 			{
-				enemy[i].Damaged();
-				bul.Smashed();
-				objDamaged.Play();
-			}
-			if (enemy[i].DestroyedStatus())
-			{
-				enemy.erase(enemy.begin() + i);
-			}
-			else
-			{
-				i++;
+				if (enemy[i].Colliding(bul[j]))
+				{
+					enemy[i].Damaged();
+					bul[j].Smashed();
+					objDamaged.Play();
+				}
+				if (enemy[i].DestroyedStatus())
+				{
+					enemy.erase(enemy.begin() + i);
+				}
+				else
+				{
+					i++;
+				}
 			}
 		}
 
@@ -138,9 +149,12 @@ void App::ComposeFrame()
 		jaz.Draw(gfx);
 
 		//Bullet
-		if (bul.FlyingStatus())
+		for (int j = 0; j < bul.size(); j++)
 		{
-			bul.Draw(gfx);
+			if (bul[j].FlyingStatus())
+			{
+				bul[j].Draw(gfx);
+			}
 		}
 
 		//Enemy
