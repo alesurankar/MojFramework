@@ -86,7 +86,7 @@ void App::UpdateModel()
 
 		//Enemy
 		count += dt;
-		if (count > 1.0f && enemy.size() < n)
+		if (count > GeneralGame::enemyRespawnTime && enemy.size() < n)
 		{
 			enemy.emplace_back(Vec2(xRand(rng), yRand(rng)), Vec2(vRand(rng), vRand(rng)));
 			count = 0.0f;
