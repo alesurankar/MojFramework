@@ -111,8 +111,8 @@ void App::UpdateModel()
 			}
 			if (enemy[i].DestroyedStatus())
 			{
+				coll.emplace_back(enemy[i].GetPos());
 				enemy.erase(enemy.begin() + i);
-				coll.emplace_back(Vec2(xRand(rng), yRand(rng)));
 			}
 			else
 			{
