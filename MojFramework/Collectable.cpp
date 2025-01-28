@@ -1,7 +1,7 @@
 #include "Collectable.h"
 
 
-void Collectable::Init(const Vec2& pos_in)
+Collectable::Collectable(const Vec2& pos_in)
 {
 	pos = pos_in;
 }

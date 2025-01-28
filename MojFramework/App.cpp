@@ -44,14 +44,13 @@ void App::UpdateModel()
 			enemy.clear();
 
 			//Collectable
-			lastDestroyedPos = Vec2(xRand(rng), yRand(rng));
-			coll.BorderCheck();
+			coll.clear();
 
 			//GeneralGame
 			gg.StartGame();
 			frameCount = 0;
 			startGame.Play();
-			k = 0;
+			count = 0;
 		}
 	}
 	else
@@ -86,12 +85,12 @@ void App::UpdateModel()
 		}
 
 		//Enemy
-		if (k > 60 && enemy.size() < n)
+		if (count > 60 && enemy.size() < n)
 		{
 			enemy.emplace_back(Vec2(xRand(rng), yRand(rng)), Vec2(vRand(rng), vRand(rng)));
-			k = 0;
+			count = 0;
 		}
-		k++;
+		count++;
 		for (int i = 0; i < enemy.size();)
 		{
 			enemy[i].Update(dt); 
@@ -112,6 +111,7 @@ void App::UpdateModel()
 			if (enemy[i].DestroyedStatus())
 			{
 				lastDestroyedPos = enemy[i].GetPos();
+				coll.emplace_back(lastDestroyedPos);
 				enemy.erase(enemy.begin() + i);
 			}
 			else
@@ -121,18 +121,25 @@ void App::UpdateModel()
 		}
 
 		//Collectable
-		coll.Init(lastDestroyedPos);
-		if (coll.Colliding(jaz))
-		{
-			gg.AddScore();
-			if (gg.ScoreStatus() >= GeneralGame::maxScore)
-			{
-				gg.GameOver();
-				gg.GameWon();
-			}
-			objCollected.Play();
-		}
 
+		for (int k = 0; k < coll.size();)
+		{
+			if (coll[k].Colliding(jaz))
+			{
+				gg.AddScore();
+				coll.erase(coll.begin() + k);
+				if (gg.ScoreStatus() >= GeneralGame::maxScore)
+				{
+					gg.GameOver();
+					gg.GameWon();
+				}
+				objCollected.Play();
+			}
+			else
+			{
+				k++;
+			}
+		}
 		//GeneralGame
 	}
 }
@@ -174,7 +181,10 @@ void App::ComposeFrame()
 		}
 
 		//Collectable
-		coll.Draw(gfx);
+		for (int k = 0; k < coll.size(); k++)
+		{
+			coll[k].Draw(gfx);
+		}
 		
 		//GeneralGame
 		gg.DrawScore(gfx);

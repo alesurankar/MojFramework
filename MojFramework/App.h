@@ -40,7 +40,7 @@ private:
 	Jaz jaz;
 	static constexpr int n = GeneralGame::enemyNum;
 	std::vector<Enemy> enemy;
-	Collectable coll;
+	std::vector<Collectable> coll;
 	GeneralGame gg;
 	std::vector<Bullet> bul;
 	Sound fireSound;
@@ -50,7 +50,7 @@ private:
 	Sound startGame;
 	Sound gameMusic;
 	int frameCount;
-	int k;
+	int count;
 	Vec2 lastDestroyedPos;
 	/********************************/
 };
