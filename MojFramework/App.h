@@ -49,6 +49,7 @@ private:
 	Sound jazDamaged;
 	Sound startGame;
 	Sound gameMusic;
-	int frameCount;
+	float frameCount;
+	float count;
 	/********************************/
 };

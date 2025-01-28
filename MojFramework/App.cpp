@@ -42,18 +42,15 @@ void App::UpdateModel()
 
 			//Enemy
 			enemy.clear();
-			for (int i = 0; i < n; i++)
-			{
-				enemy.emplace_back(Vec2(xRand(rng), yRand(rng)), Vec2(vRand(rng), vRand(rng)));
-			}
 
 			//Collectable
 			coll.Init(Vec2(xRand(rng), yRand(rng)));
 
 			//GeneralGame
 			gg.StartGame();
-			frameCount = 0;
+			frameCount = 1.3f;
 			startGame.Play();
+			count = 0.0f;
 		}
 	}
 	else
@@ -88,6 +85,12 @@ void App::UpdateModel()
 		}
 
 		//Enemy
+		count += dt;
+		if (count > 1.0f && enemy.size() < n)
+		{
+			enemy.emplace_back(Vec2(xRand(rng), yRand(rng)), Vec2(vRand(rng), vRand(rng)));
+			count = 0.0f;
+		}
 		for (int i = 0; i < enemy.size();)
 		{
 			enemy[i].Update(dt);
@@ -127,6 +130,18 @@ void App::UpdateModel()
 				gg.GameWon();
 			}
 			objCollected.Play();
+		}
+
+		//GeneralGame
+		if (gg.GameOverStatus())
+		{
+			gameMusic.StopAll();
+		}
+		frameCount += dt;
+		if (frameCount > 3.4f)
+		{
+			gameMusic.Play();
+			frameCount = 0.0f;
 		}
 	}
 }
@@ -173,11 +188,5 @@ void App::ComposeFrame()
 		//GeneralGame
 		gg.DrawScore(gfx);
 		gg.DrawGameBorder(gfx);
-		frameCount++;
-		if (frameCount > 206)
-		{
-			gameMusic.Play();
-			frameCount = 0;
-		}
 	}
 }
