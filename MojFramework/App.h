@@ -50,6 +50,5 @@ private:
 	Sound startGame;
 	Sound gameMusic;
 	int frameCount;
-	int k;
 	/********************************/
 };

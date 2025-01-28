@@ -49,7 +49,6 @@ void App::UpdateModel()
 
 			//Collectable
 			coll.Init(Vec2(xRand(rng), yRand(rng)));
-			coll.BorderCheck();
 
 			//GeneralGame
 			gg.StartGame();
@@ -75,11 +74,12 @@ void App::UpdateModel()
 		}
 
 		//Bulletf
-		for (int j = 0; j < bul.size(); j++)
+		for (int j = 0; j < bul.size();)
 		{
 			if (bul[j].FlyingStatus())
 			{
 				bul[j].Update(dt);
+				j++;
 			}
 			else
 			{
@@ -88,7 +88,7 @@ void App::UpdateModel()
 		}
 
 		//Enemy
-		for (int i = 0; i < enemy.size(); i++)
+		for (int i = 0; i < enemy.size();)
 		{
 			enemy[i].Update(dt);
 			if (enemy[i].Colliding(jaz))
@@ -104,10 +104,15 @@ void App::UpdateModel()
 					bul[j].Smashed();
 					objDamaged.Play();
 				}
-				if (enemy[i].DestroyedStatus())
-				{
-					enemy.erase(enemy.begin() + i);
-				}
+				
+			}
+			if (enemy[i].DestroyedStatus())
+			{
+				enemy.erase(enemy.begin() + i);
+			}
+			else
+			{
+				i++;
 			}
 		}
 
