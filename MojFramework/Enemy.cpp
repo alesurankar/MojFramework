@@ -97,3 +97,8 @@ void Enemy::Damaged()
 		Destroyed();
 	}
 }
+
+Vec2 Enemy::GetPos() const
+{
+	return pos;
+}

@@ -11,7 +11,6 @@ public:
 	void Init(const Vec2& pos_in);
 	void BorderCheck();
 	void Draw(Graphics& gfx) const;
-	void Update(float dt);
 	bool Colliding(Jaz& jaz);
 private:
 	Vec2 pos;

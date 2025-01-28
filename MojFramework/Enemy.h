@@ -17,9 +17,9 @@ public:
 	bool Colliding(Jaz& jaz);
 	bool Colliding(Bullet& bul);
 	void Destroyed();
-	void Respawn();
 	bool DestroyedStatus();
 	void Damaged();
+	Vec2 GetPos() const;
 private:
 	Surface surf = Surface("SpriteEnemy24x24.bmp");
 	float inOff = 1.0f;

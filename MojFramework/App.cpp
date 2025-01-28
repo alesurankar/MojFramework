@@ -48,7 +48,7 @@ void App::UpdateModel()
 			}
 
 			//Collectable
-			coll.Init(Vec2(xRand(rng), yRand(rng)));
+			lastDestroyedPos = Vec2(xRand(rng), yRand(rng));
 			coll.BorderCheck();
 
 			//GeneralGame
@@ -74,7 +74,7 @@ void App::UpdateModel()
 			gg.GameOver();
 		}
 
-		//Bulletf
+		//Bullet
 		for (int j = 0; j < bul.size(); j++)
 		{
 			if (bul[j].FlyingStatus())
@@ -107,6 +107,7 @@ void App::UpdateModel()
 			}
 			if (enemy[i].DestroyedStatus())
 			{
+				lastDestroyedPos = enemy[i].GetPos();
 				enemy.erase(enemy.begin() + i);
 			}
 			else
@@ -116,10 +117,10 @@ void App::UpdateModel()
 		}
 
 		//Collectable
+		coll.Init(lastDestroyedPos);
 		if (coll.Colliding(jaz))
 		{
 			gg.AddScore();
-			coll.Init(Vec2(xRand(rng), yRand(rng)));
 			if (gg.ScoreStatus() >= GeneralGame::maxScore)
 			{
 				gg.GameOver();
