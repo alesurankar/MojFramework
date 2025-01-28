@@ -14,7 +14,6 @@ public:
 	bool Colliding(Jaz& jaz);
 private:
 	Vec2 pos;
-	Vec2 vel;
 	static constexpr float width = 18.0f;
 	static constexpr float height = 18.0f;
 };
