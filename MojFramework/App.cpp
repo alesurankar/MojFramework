@@ -73,7 +73,7 @@ void App::UpdateModel()
 			gg.GameOver();
 		}
 
-		//Bulletf
+		//Bullet
 		for (int j = 0; j < bul.size();)
 		{
 			if (bul[j].FlyingStatus())

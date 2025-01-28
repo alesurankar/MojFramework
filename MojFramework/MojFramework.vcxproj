@@ -91,7 +91,7 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="Collectablecpp.cpp" />
+    <ClCompile Include="Collectable.cpp" />
     <ClCompile Include="COMInitializer.cpp" />
     <ClCompile Include="DXErr.cpp" />
     <ClCompile Include="FrameTimer.cpp" />
