@@ -28,7 +28,7 @@ void Jaz::BorderCheck()
 
 void Jaz::Draw(Graphics& gfx) const
 {
-	gfx.DrawImage(int(pos.x), int(pos.y), s);
+	gfx.DrawImage(int(pos.x), int(pos.y), surf);
 	gfx.DrawRect(pos - Vec2(0.0f, 8.0f), width, 6.0f, Colors::Green);
 	gfx.DrawRect(pos + Vec2(inOff, inOff - 8.0f), width - 2 * inOff, 6.0f - 2 * inOff, Colors::White);
 	gfx.DrawRect(pos - Vec2(0.0f, 8.0f), width * float(lives) / float(maxLives), 6.0f, Colors::Green);
@@ -104,7 +104,7 @@ bool Jaz::FiringStatus()
 	return firing;
 }
 
-bool Jaz::ReloadStatus()
+bool Jaz::ReloadingStatus()
 {
 	return reloaded;
 }

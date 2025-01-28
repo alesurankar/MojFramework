@@ -4,12 +4,12 @@
 App::App(MainWindow& wnd)
 	:
 	wnd(wnd),
-	gfx(wnd), 
+	gfx(wnd),
 	rng(rd()),
 	xRand(20.0f, 770.0f),
 	yRand(20.0f, 570.0f),
 	vRand(-GeneralGame::difficulty, GeneralGame::difficulty),
-	jaz(Vec2(xRand(rng),yRand(rng))),
+	jaz(Vec2(xRand(rng), yRand(rng))),
 	fireSound(L"Sounds\\1_fireSound.wav"),
 	objCollected(L"Sounds\\2_objcollected.wav"),
 	objDamaged(L"Sounds\\3_objDamaged.wav"),
@@ -44,11 +44,12 @@ void App::UpdateModel()
 			enemy.clear();
 			for (int i = 0; i < n; i++)
 			{
-				enemy.emplace_back(Vec2(xRand(rng),yRand(rng)),Vec2(vRand(rng),vRand(rng)));
+				enemy.emplace_back(Vec2(xRand(rng), yRand(rng)), Vec2(vRand(rng), vRand(rng)));
 			}
 
 			//Collectable
 			coll.Init(Vec2(xRand(rng), yRand(rng)));
+			coll.BorderCheck();
 
 			//GeneralGame
 			gg.StartGame();
@@ -62,7 +63,7 @@ void App::UpdateModel()
 		jaz.Update(wnd.mouse, wnd.kbd, dt);
 		if (jaz.FiringStatus())
 		{
-			if (!jaz.ReloadStatus())
+			if (!jaz.ReloadingStatus())
 			{
 				bul.emplace_back(jaz.GetCenter(), jaz.GetDirection(wnd.mouse));
 				fireSound.Play();
@@ -73,13 +74,12 @@ void App::UpdateModel()
 			gg.GameOver();
 		}
 
-		//Bullet
-		for (int j = 0; j < bul.size();)
+		//Bulletf
+		for (int j = 0; j < bul.size(); j++)
 		{
 			if (bul[j].FlyingStatus())
 			{
 				bul[j].Update(dt);
-				j++;
 			}
 			else
 			{
@@ -88,7 +88,7 @@ void App::UpdateModel()
 		}
 
 		//Enemy
-		for (int i = 0; i < enemy.size();)
+		for (int i = 0; i < enemy.size(); i++)
 		{
 			enemy[i].Update(dt);
 			if (enemy[i].Colliding(jaz))
@@ -107,10 +107,6 @@ void App::UpdateModel()
 				if (enemy[i].DestroyedStatus())
 				{
 					enemy.erase(enemy.begin() + i);
-				}
-				else
-				{
-					i++;
 				}
 			}
 		}
@@ -168,7 +164,7 @@ void App::ComposeFrame()
 
 		//Collectable
 		coll.Draw(gfx);
-		
+
 		//GeneralGame
 		gg.DrawScore(gfx);
 		gg.DrawGameBorder(gfx);

@@ -18,7 +18,7 @@ public:
 	float GetWidth();
 	float GetHeight();
 	bool FiringStatus();
-	bool ReloadStatus();
+	bool ReloadingStatus();
 	Vec2 GetCenter();
 	Vec2 GetDirection(const Mouse& mouse);
 	void Destroyed();
@@ -26,7 +26,7 @@ public:
 	bool DestroyedStatus();
 	void Damaged();
 private:
-	Surface s = Surface("SpriteMe21x36.bmp");
+	Surface surf = Surface("SpriteMe21x36.bmp");
 	float inOff = 1.0f;
 	bool destroyed = false;
 	int lives;
