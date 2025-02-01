@@ -3,6 +3,15 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
+#include "Enemy.h"
+#include "Collectable.h"
+#include "Jaz.h"
+#include "GeneralGame.h"
+#include "Bullet.h"
+#include <random>
+#include "FrameTimer.h"
+#include "Sound.h"
+#include <vector>
 
 class App
 {
@@ -16,29 +25,31 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  Moije Funkcije              */
-	void BorderCheck();
-	int BorderCheckObjX(int x_in, int width_in);
-	int BorderCheckObjY(int y_in, int height_in);
-	void DrawMe(int x_in, int y_in, Color c);
-	void DrawObj(int x_in, int y_in, Color c);
-	bool Colliding(int x0_in, int y0_in, int width0_in, int height0_in, int x1_in, int y1_in, int width1_in, int height1_in);
-	void GameOverBanner();
 	/********************************/
 private:
 	MainWindow& wnd;
 	Graphics gfx;
 	/********************************/
 	/*  Moji Parametri              */
-	int x = 100;
-	int y = 100;
-	int x1 = 200;
-	int y1 = 200;
-	int vx1;
-	int vy1;
-	bool collected1 = false;
-	int width = 12;
-	int height = 12;
-	int speed;
-	bool gameOver = true;
+	FrameTimer ft;
+	std::random_device rd;
+	std::mt19937 rng;
+	std::uniform_real_distribution<float> xRand;
+	std::uniform_real_distribution<float> yRand;
+	std::uniform_real_distribution<float> vRand;
+	Jaz jaz;
+	static constexpr int n = GeneralGame::enemyNum;
+	std::vector<Enemy> enemy;
+	std::vector<Collectable> coll;
+	GeneralGame gg;
+	std::vector<Bullet> bul;
+	Sound fireSound;
+	Sound objCollected;
+	Sound objDamaged;
+	Sound jazDamaged;
+	Sound startGame;
+	Sound gameMusic;
+	float frameCount;
+	float count;
 	/********************************/
 };

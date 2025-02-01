@@ -1,11 +1,21 @@
 #include "MainWindow.h"
 #include "App.h"
-#include <random>
 
 App::App(MainWindow& wnd)
 	:
 	wnd(wnd),
-	gfx(wnd)
+	gfx(wnd),
+	rng(rd()),
+	xRand(20.0f, 770.0f),
+	yRand(20.0f, 570.0f),
+	vRand(-GeneralGame::difficulty, GeneralGame::difficulty),
+	jaz(Vec2(xRand(rng), yRand(rng))),
+	fireSound(L"Sounds\\1_fireSound.wav"),
+	objCollected(L"Sounds\\2_objcollected.wav"),
+	objDamaged(L"Sounds\\3_objDamaged.wav"),
+	jazDamaged(L"Sounds\\4_jazDamaged.wav"),
+	startGame(L"Sounds\\5_startGame.wav"),
+	gameMusic(L"Sounds\\6_gameMusic.wav")
 {
 }
 
@@ -19,174 +29,175 @@ void App::Go()
 
 void App::UpdateModel()
 {
-	if (gameOver)
+	float dt = ft.CheckPoint();
+	if (gg.GameOverStatus())
 	{
 		if (wnd.kbd.KeyIsPressed(VK_RETURN))
 		{
-			std::random_device rd;
-			std::mt19937 rng(rd());
-			std::uniform_int_distribution<int> xRandom(0, gfx.ScreenWidth - width);
-			std::uniform_int_distribution<int> yRandom(0, gfx.ScreenHeight - height);
-			std::uniform_int_distribution<int> vRandom(-1,1);
-			gameOver = false;
-			collected1 = false;
-			x = xRandom(rng);
-			y = yRandom(rng); 
-			x1 = xRandom(rng);
-			y1 = yRandom(rng);
-			vx1 = vRandom(rng);
-			vy1 = vRandom(rng);
+			//Jaz
+			jaz.Respawn();
+
+			//Bullet
+			bul.clear();
+
+			//Enemy
+			enemy.clear();
+
+			//Collectable
+			coll.clear();
+
+			//GeneralGame
+			gg.StartGame();
+			frameCount = 1.3f;
+			startGame.Play();
+			count = 0.0f;
 		}
 	}
 	else
 	{
-		if (wnd.kbd.KeyIsPressed(VK_SPACE))
+		//Jaz
+		jaz.Update(wnd.mouse, wnd.kbd, dt);
+		if (jaz.FiringStatus())
 		{
-			speed = 6;
+			if (!jaz.ReloadingStatus())
+			{
+				bul.emplace_back(jaz.GetCenter(), jaz.GetDirection(wnd.mouse));
+				fireSound.Play();
+			}
 		}
-		else
+		if (jaz.DestroyedStatus())
 		{
-			speed = 2;
-		}
-		if (wnd.kbd.KeyIsPressed('W'))
-		{
-			y -= speed;;
-		}
-		if (wnd.kbd.KeyIsPressed('S'))
-		{
-			y += speed;
-		}
-		if (wnd.kbd.KeyIsPressed('A'))
-		{
-			x -= speed;
-		}
-		if (wnd.kbd.KeyIsPressed('D'))
-		{
-			x += speed;
+			gg.GameOver();
 		}
 
-		BorderCheck();
-
-		vx1 *= BorderCheckObjX(x1, width);
-		vy1 *= BorderCheckObjY(y1, height);
-
-		x1 += vx1;
-		y1 += vy1;
-
-		if (Colliding(x, y, width, height, x1, y1, width, height))
+		//Bullet
+		for (int j = 0; j < bul.size();)
 		{
-			collected1 = true;
+			if (bul[j].FlyingStatus())
+			{
+				bul[j].Update(dt);
+				j++;
+			}
+			else
+			{
+				bul.erase(bul.begin() + j);
+			}
 		}
-		if (collected1)
+
+		//Enemy
+		count += dt;
+		if (count > GeneralGame::enemyRespawnTime && enemy.size() < n)
 		{
-			gameOver = true;
+			enemy.emplace_back(Vec2(xRand(rng), yRand(rng)), Vec2(vRand(rng), vRand(rng)));
+			count = 0.0f;
 		}
-	}
-}
-
-void App::BorderCheck()
-{
-	if (x <= 0)
-	{
-		x = 0;
-	}
-	if (y <= 0)
-	{
-		y = 0;
-	}
-	if (x >= gfx.ScreenWidth - width)
-	{
-		x = gfx.ScreenWidth - width;
-	}
-	if (y >= gfx.ScreenHeight - height)
-	{
-		y = gfx.ScreenHeight - height;
-	}
-}
-
-int App::BorderCheckObjX(int x_in, int width_in)
-{
-	if ((x_in <= 0) || (x_in >= gfx.ScreenWidth - width_in))
-	{
-		return -1;
-	}
-	else
-	{
-		return 1;
-	}
-}
-
-int App::BorderCheckObjY(int y_in, int height_in)
-{
-	if ((y_in <= 0)||(y_in >= gfx.ScreenHeight - height_in))
-	{
-		return -1;
-	}
-	else
-	{
-		return 1;
-	}
-}
-
-void App::DrawMe(int x_in, int y_in, Color c)
-{
-	for (int i = x_in; i < x_in + width; i++)
-	{
-		for (int j = y_in; j < y_in + height; j++)
+		for (int i = 0; i < enemy.size();)
 		{
-			gfx.PutPixel(i, j, c);
+			enemy[i].Update(dt);
+			if (enemy[i].Colliding(jaz))
+			{
+				jaz.Damaged();
+				jazDamaged.Play();
+			}
+			for (int j = 0; j < bul.size(); j++)
+			{
+				if (enemy[i].Colliding(bul[j]))
+				{
+					enemy[i].Damaged();
+					bul[j].Smashed();
+					objDamaged.Play();
+				}
+
+			}
+			if (enemy[i].DestroyedStatus())
+			{
+				coll.emplace_back(enemy[i].GetPos());
+				enemy.erase(enemy.begin() + i);
+			}
+			else
+			{
+				i++;
+			}
 		}
-	}
-}
 
-void App::DrawObj(int x_in, int y_in, Color c)
-{
-	for (int i = x_in; i < x_in + width; i++)
-	{
-		for (int j = y_in; j < y_in + height; j++)
+		//Collectable
+		for (int c = 0; c < coll.size();)
 		{
-			gfx.PutPixel(i, j, c);
+			if (coll[c].Colliding(jaz))
+			{
+				gg.AddScore();
+				coll.erase(coll.begin() + c);
+				if (gg.ScoreStatus() >= GeneralGame::maxScore)
+				{
+					gg.GameOver();
+					gg.GameWon();
+				}
+				objCollected.Play();
+			}
+			else
+			{
+				c++;
+			}
 		}
-	}
-}
 
-bool App::Colliding(int x0_in, int y0_in, int width0_in, int height0_in, int x1_in, int y1_in, int width1_in, int height1_in)
-{
-	const int right0 = x0_in + width0_in;
-	const int bottom0 = y0_in + height0_in;
-	const int right1 = x1_in + width1_in;
-	const int bottom1 = y1_in + height1_in;
-
-	return
-		right0 >= x1_in &&
-		bottom0 >= y1_in &&
-		right1 >= x0_in &&
-		bottom1 >= y0_in;
-}
-
-void App::GameOverBanner()
-{
-	for (int i = 0; i < gfx.ScreenWidth; i++)
-	{
-		for (int j = 0; j < gfx.ScreenHeight; j++)
+		//GeneralGame
+		if (gg.GameOverStatus())
 		{
-			gfx.PutPixel(i, j, Colors::Green);
+			gameMusic.StopAll();
+		}
+		frameCount += dt;
+		if (frameCount > 3.4f)
+		{
+			gameMusic.Play();
+			frameCount = 0.0f;
 		}
 	}
 }
 
 void App::ComposeFrame()
 {
-	if (gameOver)
+	if (gg.GameOverStatus())
 	{
-		GameOverBanner();
+		if (gg.GameWonStatus())
+		{
+			gg.GameWonBanner(gfx);
+		}
+		else
+		{
+			gg.GameLostBanner(gfx);
+		}
 	}
 	else
 	{
-		DrawMe(x, y, Colors::Green);
-		if (!collected1)
+		//Jaz
+		jaz.Draw(gfx);
+
+		//Bullet
+		for (int j = 0; j < bul.size(); j++)
 		{
-			DrawObj(x1, y1, Colors::Red);
+			if (bul[j].FlyingStatus())
+			{
+				bul[j].Draw(gfx);
+			}
 		}
+
+		//Enemy
+		for (int i = 0; i < enemy.size(); i++)
+		{
+			if (!enemy[i].DestroyedStatus())
+			{
+				enemy[i].Draw(gfx);
+			}
+		}
+
+		//Collectable
+		for (int c = 0; c < coll.size(); c++)
+		{
+			coll[c].Draw(gfx);
+		}
+
+		//GeneralGame
+		gg.DrawScore(gfx);
+		gg.DrawGameBorder(gfx);
 	}
 }

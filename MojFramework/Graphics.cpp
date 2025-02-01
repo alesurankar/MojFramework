@@ -309,6 +309,71 @@ Color Graphics::GetPixel(int x, int y) const
 	return pSysBuffer[Graphics::ScreenWidth * y + x];
 }
 
+void Graphics::DrawRect(int x1, int y1, int x2, int y2, Color c)
+{
+	if (x1 > x2)
+	{
+		std::swap(x1, x2);
+	}
+	if (y1 > y2)
+	{
+		std::swap(y1, y2);
+	}
+
+	for (int i = x1; i < x2; i++)
+	{
+		for (int j = y1; j < y2; j++)
+		{
+			PutPixel(i, j, c);
+		}
+	}
+}
+
+void Graphics::DrawImage(int x, int y, const Surface& s)
+{
+	const int width = s.GetWidth();
+	const int height = s.GetHeight();
+	for (int sy = 0; sy < height; sy++)
+	{
+		for (int sx = 0; sx < width; sx++)
+		{
+			PutPixel(x + sx, y + sy, s.GetPixel(sx, sy));
+		}
+	}
+}
+
+void Graphics::DrawRect(const Vec2& topLeft, const Vec2& bottomRight, Color c)
+{
+	DrawRect(int(topLeft.x), int(topLeft.y), int(bottomRight.x), int(bottomRight.y), c);
+}
+
+void Graphics::DrawRect(const Vec2& topLeft, float width, float height, Color c)
+{
+	DrawRect(topLeft, topLeft + Vec2(width, height), c);
+}
+
+void Graphics::DrawCircle(int x, int y, int rad, Color c)
+{
+	const int rad_sq = rad * rad;
+	for (int i = x - rad; i < x + rad; i++)
+	{
+		for (int j = y - rad; j < y + rad; j++)
+		{
+			const int x_dif = x - i;
+			const int y_dif = y - j;
+			if (x_dif * x_dif + y_dif * y_dif <= rad_sq)
+			{
+				PutPixel(i, j, c);
+			}
+		}
+	}
+}
+
+void Graphics::DrawCircle(const Vec2& center, float rad, Color c)
+{
+	DrawCircle(int(center.x), int(center.y), int(rad), c);
+}
+
 
 //////////////////////////////////////////////////
 //           Graphics Exception
