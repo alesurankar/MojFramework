@@ -36,16 +36,6 @@ private:
 	int vx1;
 	int vy1;
 	bool collected1 = false;
-	int x2 = 300;
-	int y2 = 300;
-	int vx2;
-	int vy2;
-	bool collected2 = false;
-	int x3 = 400;
-	int y3 = 400;
-	int vx3;
-	int vy3;
-	bool collected3 = false;
 	int width = 12;
 	int height = 12;
 	int speed;

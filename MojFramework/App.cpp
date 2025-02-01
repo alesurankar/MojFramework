@@ -30,22 +30,12 @@ void App::UpdateModel()
 			std::uniform_int_distribution<int> vRandom(-1,1);
 			gameOver = false;
 			collected1 = false;
-			collected2 = false;
-			collected3 = false;
 			x = xRandom(rng);
 			y = yRandom(rng); 
 			x1 = xRandom(rng);
 			y1 = yRandom(rng);
-			x2 = xRandom(rng);
-			y2 = yRandom(rng);
-			x3 = xRandom(rng);
-			y3 = yRandom(rng);
 			vx1 = vRandom(rng);
 			vy1 = vRandom(rng);
-			vx2 = vRandom(rng);
-			vy2 = vRandom(rng);
-			vx3 = vRandom(rng);
-			vy3 = vRandom(rng);
 		}
 	}
 	else
@@ -79,31 +69,15 @@ void App::UpdateModel()
 
 		vx1 *= BorderCheckObjX(x1, width);
 		vy1 *= BorderCheckObjY(y1, height);
-		vx2 *= BorderCheckObjX(x2, width);
-		vy2 *= BorderCheckObjY(y2, height);
-		vx3 *= BorderCheckObjX(x3, width);
-		vy3 *= BorderCheckObjY(y3, height);
 
 		x1 += vx1;
 		y1 += vy1;
-		x2 += vx2;
-		y2 += vy2;
-		x3 += vx3;
-		y3 += vy3;
 
 		if (Colliding(x, y, width, height, x1, y1, width, height))
 		{
 			collected1 = true;
 		}
-		if (Colliding(x, y, width, height, x2, y2, width, height))
-		{
-			collected2 = true;
-		}
-		if (Colliding(x, y, width, height, x3, y3, width, height))
-		{
-			collected3 = true;
-		}
-		if (collected1 && collected2 && collected3)
+		if (collected1)
 		{
 			gameOver = true;
 		}
@@ -213,14 +187,6 @@ void App::ComposeFrame()
 		if (!collected1)
 		{
 			DrawObj(x1, y1, Colors::Red);
-		}
-		if (!collected2)
-		{
-			DrawObj(x2, y2, Colors::Red);
-		}
-		if (!collected3)
-		{
-			DrawObj(x3, y3, Colors::Red);
 		}
 	}
 }
