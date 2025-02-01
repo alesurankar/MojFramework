@@ -2,7 +2,6 @@
 #include "Graphics.h"
 #include "DXErr.h"
 #include "MyException.h"
-#include <assert.h>
 #include <string>
 #include <array>
 
@@ -232,6 +231,11 @@ Graphics::~Graphics()
 	if (pImmediateContext) pImmediateContext->ClearState();
 }
 
+RectI Graphics::GetScreenRect()
+{
+	return{ 0,ScreenWidth,0,ScreenHeight };
+}
+
 void Graphics::EndFrame()
 {
 	HRESULT hr;
@@ -294,6 +298,15 @@ void Graphics::PutPixel(int x, int y, Color c)
 	assert(y >= 0);
 	assert(y < int(Graphics::ScreenHeight));
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
+}
+
+Color Graphics::GetPixel(int x, int y) const
+{
+	assert(x >= 0);
+	assert(x < int(Graphics::ScreenWidth));
+	assert(y >= 0);
+	assert(y < int(Graphics::ScreenHeight));
+	return pSysBuffer[Graphics::ScreenWidth * y + x];
 }
 
 
