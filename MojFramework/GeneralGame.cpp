@@ -3,11 +3,13 @@
 void GeneralGame::GameWonBanner(Graphics& gfx) const
 {
 	gfx.DrawRect(0, 0, Graphics::ScreenWidth, Graphics::ScreenHeight, Colors::Green);
+	font.DrawText("Winner! ", { 350, 290 }, Colors::White, gfx);
 }
 
 void GeneralGame::GameLostBanner(Graphics& gfx) const
 {
 	gfx.DrawRect(0, 0, Graphics::ScreenWidth, Graphics::ScreenHeight, Colors::Red);
+	font.DrawText("You suck! ", { 330, 290 }, Colors::White, gfx);
 }
 
 void GeneralGame::DrawScore(Graphics& gfx) const

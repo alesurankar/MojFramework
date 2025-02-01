@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Graphics.h"
+#include "Font.h"
 
 class GeneralGame
 {
@@ -21,6 +22,7 @@ private:
 	bool gameWon = true;
 	int score = 0;
 	int scoreX = Graphics::ScreenWidth / maxScore;
+	Font font = "Fixedsys16x28.bmp";
 public:
 	static constexpr int offset = 2;
 	static constexpr int scoreY = 12;
